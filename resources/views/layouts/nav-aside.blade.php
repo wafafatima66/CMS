@@ -1,5 +1,3 @@
-
-
 @section('css')
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&display=swap');
 @endsection
@@ -29,17 +27,25 @@
             </a>
         </div>                
     </div>
-
+        <!-- END SEARCH BAR -->
       <hr class="slide-divider">
-    <!-- END SEARCH BAR -->
+    
+
+      <div class="card-body">
+        <div class="card-sub-body text-center mt-5 mb-5">
+            <a href="{{ url('/') }}" class="btn btn-white w-100 p-3"><i class="fa fa-plus"></i>Notes</a>
+        </div>
+    </div>
+
+    <hr class="slide-divider">
 
         {{-- @role('admin') --}}
             {{-- <li class="side-item side-item-category mt-4">{{ __('Folders') }}</li> --}}
 
-            @if ( auth()->user()->role == 2)
+            @if ( auth()->user()->role != 3)
             <div class="card-body">
                 <div class="card-sub-body text-center mt-5 mb-5">
-                    <button class="btn btn-white w-100 p-3"><i class="fa fa-plus"></i>  Add Folder</button>
+                    <a href="{{ route('folders') }}" class="btn btn-white w-100 p-3"><i class="fa fa-plus"></i>Add Folder</a>
                 </div>
             </div>
             @endif
@@ -50,19 +56,21 @@
                     <span class="side-menu__icon mdi mdi-account-convert"></span>
                     <span class="side-menu__label">{{ __('Main Folders') }}</span><i class="angle fa fa-angle-right"></i></a>
                     <ul class="slide-menu">
-                        <li><a href="" class="slide-item">{{ __('Folder 1') }}</a></li>
-                        <li><a href="" class="slide-item">{{ __('Folder 2') }}</a></li>
-                        <li><a href="" class="slide-item">{{ __('Folder 3') }}</a></li>
+                        @foreach ($folders as $folder)
+                        @if ($folder->layer == 1)
+                        <li><a href="{{ url('/folders') }}" class="slide-item">{{ $folder->name }}</a></li>
+                        @endif
+                        @endforeach
                     </ul>
             </li>
 
             <hr class="slide-divider">
             {{-- <li class="side-item side-item-category">{{ __('Sub Folders') }}</li> --}}
 
-            @if ( auth()->user()->role == 2)
+            @if ( auth()->user()->role != 3)
             <div class="card-body">
                 <div class="card-sub-body text-center mt-5 mb-5">
-                    <button class="btn btn-white w-100 p-3"><i class="fa fa-plus"></i>  Add SubFolder</button>
+                    <a href="{{ route('subfolders') }}" class="btn btn-white w-100 p-3"><i class="fa fa-plus"></i>  Add SubFolder</a>
                 </div>
             </div>
             @endif
@@ -72,9 +80,14 @@
                     <span class="side-menu__icon mdi mdi-account-convert"></span>
                     <span class="side-menu__label">{{ __('Sub Folders') }}</span><i class="angle fa fa-angle-right"></i></a>
                     <ul class="slide-menu">
-                        <li><a href="/po" class="slide-item">{{ __('Sub Folder 1') }}</a></li>
+                        {{-- <li><a href="/po" class="slide-item">{{ __('Sub Folder 1') }}</a></li>
                         <li><a href="/if" class="slide-item">{{ __('Sub Folder 2') }}</a></li>
-                        <li><a href="/ur" class="slide-item">{{ __('Sub Folder 3') }}</a></li>
+                        <li><a href="/ur" class="slide-item">{{ __('Sub Folder 3') }}</a></li> --}}
+                        @foreach ($folders as $folder)
+                        @if ($folder->layer == 2)
+                        <li><a href="{{ url('/sub_folders') }}" class="slide-item">{{ $folder->name }}</a></li>
+                        @endif
+                        @endforeach
                     </ul>
             </li>
             

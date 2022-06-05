@@ -57,9 +57,7 @@
                     </div>
 
                     <div class="form-group mb-0">                        
-                        <button type="submit" class="btn btn-black mr-2">{{ __('Login') }}</button>       
-                        
-                                               
+                        <button type="submit" class="btn btn-black mr-2">{{ __('Login') }}</button>                         
                     </div>
 
 

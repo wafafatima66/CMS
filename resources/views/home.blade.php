@@ -23,12 +23,13 @@
 
                                 
                                 <div class="col-md-3 pr-0 pl-0">
-                                    @if ( auth()->user()->role == 2)
+                                    @if ( auth()->user()->role != 3)
                                     <div class="card-body">
                                         <div class="card-sub-body text-center mt-5 mb-5">
                                             <button class="btn btn-black"><i class="fa fa-plus"></i> Create a note</button>
                                         </div>
                                     </div>
+                                    
                                     @endif
 
                                     <div class="notes-sidebar background-white mt-5 p-3 ">
@@ -59,7 +60,7 @@
                                         <div class="card-header border-bottom">App Future , Inc</div>
                                         <div class="card-h6">Sep 12 2018</div>
                                         {{-- <div class=""> --}}
-                                            @if ( auth()->user()->role == 2)
+                                            @if ( auth()->user()->role != 3)
                                             <div class="input-box" >
                                                 <textarea class="form-control" name="content" rows="12" id="richtext" required>{{ old('content') }}</textarea>
                                                 @error('content')

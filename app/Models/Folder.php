@@ -12,5 +12,12 @@ class Folder extends Model
     protected $fillable = [
         'name',
         'layer',
+        'user_id',
+        'main_folder_id'
     ];
+
+    public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
 }

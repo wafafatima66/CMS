@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Folder;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -24,8 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // $user_role = User::
-        return view('home');
+        $folders = Folder::all();
+        return view('home', compact('folders'));
     }
 
     // public function adminHome()

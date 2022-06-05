@@ -79,6 +79,10 @@ $(function(e) {
 
           $('#free-tier-neural').awselect();
 
+          $('#main-folder').awselect();
+
+          $('#main-folder-modal').awselect();
+
       }); 
   
   });

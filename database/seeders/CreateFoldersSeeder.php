@@ -16,16 +16,22 @@ class CreateFoldersSeeder extends Seeder
     {
         $folder = [
             [
+                'user_id'=>'1',
                 'name' => 'Folder 1',
-               'layer'=>'1'
+                'layer'=>'1',
+                'main_folder_id'=>'1'
             ],
             [
-                'name' => 'Folder 1',
-               'layer'=>'1'
+                'user_id'=>'1',
+                'name' => 'Folder 2',
+                'layer'=>'1',
+                'main_folder_id'=>'1'
             ],
             [
-                'name' => 'Folder 1',
-               'layer'=>'1'
+                'user_id'=>'1',
+                'name' => 'Folder 3',
+                'layer'=>'1',
+                'main_folder_id'=>'1'
             ],
             
         ];
