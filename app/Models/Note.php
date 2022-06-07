@@ -12,6 +12,12 @@ class Note extends Model
     protected $fillable = [
         'note',
         'folder_id',
-        'user_id'
+        'user_id',
+        'title'
     ];
+
+    public function user()
+    {
+      return $this->belongsTo(User::class);
+    }
 }

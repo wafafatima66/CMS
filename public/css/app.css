@@ -24197,6 +24197,7 @@ hr.pageheader-border {
 }
 .table-actions-dropdown .dropdown-item {
   padding: 0.5rem 1rem;
+  border-bottom: solid 1px #f3f3f3;
 }
 .table-actions-dropdown .dropdown-item:hover, .table-actions-dropdown .dropdown-item:focus {
   background: #f5f9fc;

@@ -146,7 +146,7 @@ class FolderController extends Controller
     {
         $folder->delete();
 
-        return redirect()->route('folders')->with('success', 'Selected Folder was deleted successfully');       
+        return redirect()->route('home')->with('success', 'Selected Folder was deleted successfully');       
     }
 
     public function delete(Folder $folder)
@@ -154,5 +154,12 @@ class FolderController extends Controller
         return view('folder.delete', compact('folder'));     
     }
 
+    // added
+
+    public function add()
+    {
+        // $main_folders = Folder::where('layer',1)->get();
+        return view('folder.add');
+    }
    
 }

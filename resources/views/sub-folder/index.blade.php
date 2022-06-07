@@ -30,25 +30,6 @@
                                       <form method="POST" action="{{ route('subfolder.store') }}" enctype="multipart/form-data">
                                         @csrf
 
-										{{-- <div class="input-box"> 
-
-											<select name="main_folder_id" class="form-control" 
-											 data-placeholder="Select Folder:"
-											@error('main_folder_id') is-invalid @enderror">
-											<option value="" selected >Select Folder</option>
-												@foreach ($folders as $folder)
-													<option value="{{ $folder->id }}">{{ $folder->name }}</option>
-												@endforeach
-											</select>
-
-											@error('main_folder_id')
-												<span class="invalid-feedback" role="alert">
-													{{ $message }}
-												</span>
-											@enderror
-  
-										  </div> --}}
-
 										  <div class="form-group">
 											<select id="main-folder" name="main_folder_id" data-placeholder="Select Folder" required>	
 												@foreach ($folders as $folder)

@@ -103,7 +103,7 @@ class SubFolderController extends Controller
     {
         $folder->delete();
 
-        return redirect()->route('subfolders')->with('success', 'Selected Folder was deleted successfully');       
+        return redirect()->route('home')->with('success', 'Selected Folder was deleted successfully');       
     }
 
     public function delete(Folder $folder)
@@ -111,4 +111,12 @@ class SubFolderController extends Controller
         return view('sub-folder.delete', compact('folder'));     
     }
     
+    // new
+
+    public function add(Folder $folder)
+    {
+        $main_folders = Folder::where('layer',1)->get();
+        return view('sub-folder.add', compact('folder','main_folders'));
+    }
+
 }

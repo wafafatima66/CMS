@@ -19,19 +19,19 @@ class CreateFoldersSeeder extends Seeder
                 'user_id'=>'1',
                 'name' => 'Folder 1',
                 'layer'=>'1',
-                'main_folder_id'=>'1'
+                'main_folder_id'=>'0'
             ],
             [
                 'user_id'=>'1',
                 'name' => 'Folder 2',
                 'layer'=>'1',
-                'main_folder_id'=>'1'
+                'main_folder_id'=>'0'
             ],
             [
                 'user_id'=>'1',
                 'name' => 'Folder 3',
                 'layer'=>'1',
-                'main_folder_id'=>'1'
+                'main_folder_id'=>'0'
             ],
             
         ];

@@ -11,7 +11,7 @@
         <button type="submit" class="btn btn-confirm">{{ __('Confirm') }}</button>
     </div> --}}
 
-    <div class="form-group">
+    {{-- <div class="form-group">
 
       <select  name="main_folder_id" data-placeholder="Select Folder" required class="form-control" 
       
@@ -30,8 +30,9 @@
         <p class="text-danger">{{ $errors->first('main_folder_id') }}</p>
       @enderror
 
-    </div>
+    </div> --}}
 
+    <input type="hidden" name="main_folder_id" value="{{ $folder->main_folder_id }}">
 
     <div class="input-box"> 
       <input type="text" placeholder="Name" class="form-control @error('folder_name') is-invalid @enderror" name="folder_name" autocomplete="off" value="{{ $folder->name }}" >

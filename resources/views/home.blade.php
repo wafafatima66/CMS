@@ -32,7 +32,7 @@
                                     
                                     @endif
 
-                                    <div class="notes-sidebar background-white mt-5 p-3 ">
+                                    <div class="notes-sidebar background-white mt-5 p-3 " id="shownotes">
                 
                                         <?php
                                     for($i=0 ; $i<10 ; $i++){ ?>
@@ -59,7 +59,9 @@
                                 <div class="col-md-9 border-left">
                                         <div class="card-header border-bottom">App Future , Inc</div>
                                         <div class="card-h6">Sep 12 2018</div>
-                                        {{-- <div class=""> --}}
+                                        <div class="card-body" style="height: 320px">
+
+                                        </div>
                                             @if ( auth()->user()->role != 3)
                                             <div class="input-box" >
                                                 <textarea class="form-control" name="content" rows="12" id="richtext" required>{{ old('content') }}</textarea>
@@ -68,7 +70,6 @@
                                                 @enderror
                                             </div>
                                             @endif
-                                        {{-- </div> --}}
                                 </div>
                             </div>
 
