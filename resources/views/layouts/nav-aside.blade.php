@@ -58,19 +58,24 @@
 
                         <div class="dropdown-menu table-actions-dropdown" role="menu" aria-labelledby="actions">
 
+                            <button class="dropdown-item" id="notes"  data-attr="{{$folder->id}}" >Notes</button>
+
+                            @if (auth()->user()->role != 3)
+
                             <button class="dropdown-item" data-toggle="modal" id="addSubFolderButton"
                                 data-target="#addSubFolderModal" type="button"
                                 data-attr="{{ route('subfolder.add', $folder->id) }}">Add Sub Folder</button>
 
-                            <button class="dropdown-item" id="notes"  data-attr="{{$folder->id}}" >Notes</button>
-
-                            <button class="dropdown-item" data-toggle="modal" id="editFolderButton"
+                                <button class="dropdown-item" data-toggle="modal" id="editFolderButton"
                                 data-target="#editModal" type="button"
                                 data-attr="{{ route('folder.edit', $folder['id']) }}"> Edit</button>
 
                             <button class="dropdown-item" data-toggle="modal" id="deleteFolderButton"
                                 data-target="#deleteModal" type="button"
                                 data-attr="{{ route('folder.delete', $folder['id']) }}"> Delete</button>
+
+                                @endif
+
 
                         </div>
 
@@ -90,6 +95,8 @@
                                 <li>
                                     <a class="slide-item">{{ $subfolder->name }}
 
+                                       
+
                                         <button class="btn table-actions" type="button" data-toggle="dropdown"
                                             aria-haspopup="true" aria-expanded="false" style="background: none;"><i
                                                 class="fa fa-ellipsis-v"></i>
@@ -99,6 +106,8 @@
                                             aria-labelledby="actions">
 
                                             <button class="dropdown-item" id="notes"  data-attr="{{$subfolder->id}}" >Notes</button>
+
+                                            @if (auth()->user()->role != 3)
 
                                             <button class="dropdown-item" data-toggle="modal" id="editSubFolderButton"
                                                 data-target="#editModal" type="button"
@@ -110,6 +119,8 @@
                                                 data-attr="{{ route('subfolder.delete', $subfolder['id']) }}">
                                                 Delete</button>
 
+                                            @endif
+                                            
                                         </div>
 
                                     </a>
@@ -261,6 +272,8 @@
 <script src="{{ URL::asset('js/jquery-3.6.0.min.js') }}"></script>
 
 <script>
+
+
 
 // ADD MAIN FOLDER
 $(document).on('click', '#addFolderButton', function(event) {
@@ -426,5 +439,7 @@ $(document).on('click', '#addFolderButton', function(event) {
                }
             });
     });
+
+    
 
 </script>

@@ -65,7 +65,8 @@ body {
   color: #212529;
   text-align: left;
   background-color: #F1F1F1;
-  margin: 0; height: 100%; overflow: hidden
+  margin: 0; height: 100%; 
+  overflow: scroll ;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -26605,7 +26606,7 @@ section .alert {
   min-height: 70vh;
   overflow-y: auto;
   padding: 10px;
-  border-top: 1px solid #f2f2f2;
+  /* border-top: 1px solid #f2f2f2; */
 }
 .app-header.header .nav-link.icon.nav-link-icon-text :hover{
 color: #000;
@@ -26658,6 +26659,7 @@ font-size: 12px;
 .sidebar-card{
   background-color:#FCFCFC ;
   border: 1px solid #FCFCFC;
+  cursor: pointer;
 }
 .border-left{
   border-left: 1px solid #f4f4f4;
@@ -26675,5 +26677,11 @@ font-size: 12px;
   font-weight: 600;
 }
 .btn-white:hover{
+  color: #000;
+}
+.black-hover{
+  color: #787777;
+}
+.black-hover:hover{
   color: #000;
 }

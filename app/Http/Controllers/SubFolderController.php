@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Folder;
+use App\Models\Note;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
@@ -101,6 +102,9 @@ class SubFolderController extends Controller
   
     public function destroy(Folder $folder)
     {
+        $folder_id = $folder->id ; 
+        $Note = Note::where('folder_id',$folder_id);
+        $Note->delete();
         $folder->delete();
 
         return redirect()->route('home')->with('success', 'Selected Folder was deleted successfully');       

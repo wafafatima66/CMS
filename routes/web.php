@@ -48,5 +48,11 @@ Route::get('/sub_folders/{folder}/add', [SubFolderController::class, 'add'])->na
 
 // notes
 Route::get('/notes',[NotesController::class, 'index'])->name('notes');
+Route::post('/notes',[NotesController::class, 'store'])->name('notes.store');
+Route::get('/notes/show',[NotesController::class, 'show'])->name('notes.show');
+Route::put('/notes/{note}/update',[NotesController::class, 'update'])->name('notes.update');
+Route::delete('/notes/{note}', [NotesController::class, 'destroy'])->name('notes.destroy'); 
+Route::get('/notes/{note}', [NotesController::class, 'delete'])->name('notes.delete'); 
+// Route::get('/note/show/box',[NotesController::class, 'noteBox'])->name('note.show.box');
 // });
 

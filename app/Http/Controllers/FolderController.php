@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Folder;
+use App\Models\Note;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -144,6 +145,26 @@ class FolderController extends Controller
      */
     public function destroy(Folder $folder)
     {
+
+        $folder_id = $folder->id ; 
+
+        $sub_folders = Folder::where('main_folder_id',$folder_id)->get();
+
+foreach ($sub_folders as $sub_folder){
+
+    $Note = Note::where('folder_id',$sub_folder->id);
+
+        $Note->delete();
+
+
+}
+
+$sub_folders = Folder::where('main_folder_id',$folder_id)->delete();
+
+        $Note = Note::where('folder_id',$folder_id);
+
+        $Note->delete();
+
         $folder->delete();
 
         return redirect()->route('home')->with('success', 'Selected Folder was deleted successfully');       
