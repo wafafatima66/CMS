@@ -52,6 +52,7 @@
 }
 
 .app-content {
+  height: 90vh;
   min-height: calc(100vh - 100px);
   margin-top: 50px;
   margin-bottom: 0 !important;
@@ -317,6 +318,7 @@
   z-index: 1000;
   background: #fCFCFC !important;
   transition: left 0.3s ease, width 0.3s ease;
+  border: solid 1px #e3dcdc;
 }
 .app-sidebar::-webkit-scrollbar {
   width: 6px;
@@ -408,22 +410,24 @@
   padding: 2.5px 22px 3px 13px;
   font-size: 14px;
   font-weight: 400;
-  transition: border-left-color 0.2s ease, background-color 0.2s ease;
+  /* transition: border-left-color 0.2s ease, background-color 0.2s ease; */
   color: #1e1e2d;
-  margin: 0px 5px 0px 0px;
-  border-radius: 50px;
+  /* margin: 0px 5px 0px 0px; */
+  /* border-radius: 50px;
   border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+  border-bottom-left-radius: 0; */
 }
 .side-menu__item:hover, .side-menu__item:focus {
   text-decoration: none;
   /* background: #f5f9fc; */
-  background: #fff;
+  /* background: #fff; */
   /* color: #1e1e2d; */
   color: #000;
   /* border-left: 3px solid #007BFF; */
-  border-left: 3px solid #222;
-  transition: border-left 0.2s ease-in-out, color 0.2s ease;
+  /* border-left: 3px solid #222; */
+  /* transition: border-left 0.2s ease-in-out, color 0.2s ease; */
+  border: solid 1px #f1f1f1;
+  background: #f6f6f6;
 }
 .side-menu__item:hover .side-menu__icon, .side-menu__item:focus .side-menu__icon {
   /* color: #007BFF; */
@@ -470,11 +474,13 @@
   transition: all 0.3s;
 }
 .slide.is-expanded a.slide-item:hover {
-  margin-left: 5px;
+  /* margin-left: 5px; */
   text-decoration: none;
-  transition: all 0.3s;
-  color: #000 !important;
-  font-weight: 600;
+  /* transition: all 0.3s; */
+  /* color: #000 !important; */
+  /* font-weight: 600; */
+  /* border: solid 1px #f1f1f1; */
+    background: #f6f6f6;
 }
 
 .side-menu .side-menu__icon {
@@ -538,7 +544,7 @@
 .slide-item {
   display: flex;
   align-items: center;
-  padding: 8px 14px 8px 55px;
+  padding: 2px 14px 2px 55px;
   font-size: 11px;
   color: #1e1e2d;
 }
@@ -992,8 +998,8 @@
 }
 
 .slide-menu a:before {
-  font-family: "FontAwesome";
-  content: "";
+  /* font-family: "FontAwesome";
+  content: ""; */
   display: inline-block;
   margin-right: 8px;
   vertical-align: middle;

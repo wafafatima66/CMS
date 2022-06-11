@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap);
 @import url(https://fonts.googleapis.com/css?family=Lato:400,700,900);
 @import url(https://fonts.googleapis.com/css2?family=Open+Sans:wght@600;700;800&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap);
 /* @charset "UTF-8"; */
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
@@ -58,7 +59,8 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" ;
+
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -16211,6 +16213,7 @@ a.icon:hover {
   border: 1px solid #dbe2eb;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   border-radius: 8px;
+  height: 100%;
 }
 .card > hr {
   margin-right: 0;
@@ -21870,7 +21873,7 @@ body *::-webkit-scrollbar-track {
 .header {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-  background: #FCFCFC;
+  background: #f1f1f1;
 }
 
 body.fixed-header .header {
@@ -26622,7 +26625,7 @@ font-size: 12px;
   padding: 10px 25px;
     font-size: 20px;
     color: #000;
-    font-weight: 600;
+    /* font-weight: 600; */
 }
 .bottom-toolbar{
   min-height: 20px;
@@ -26657,9 +26660,11 @@ font-size: 12px;
   color: #fff;
 }
 .sidebar-card{
-  background-color:#FCFCFC ;
-  border: 1px solid #FCFCFC;
+  background-color:#fcfcfc;
+  border: 1px solid #F6F6F6;
   cursor: pointer;
+  height: 120px;
+  box-shadow: none;
 }
 .border-left{
   border-left: 1px solid #f4f4f4;
@@ -26684,4 +26689,13 @@ font-size: 12px;
 }
 .black-hover:hover{
   color: #000;
+}
+.h-100{
+  height: 100%;
+}
+.fs-25{
+  font-size: 25px;
+}
+.fs-15{
+  font-size: 15px !important;
 }

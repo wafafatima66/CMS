@@ -6,20 +6,47 @@
 
     
 
-    <div class="card-header border-bottom">
+    <div class="border-bottom">
 
-        <span id="note-title">
+        {{-- <span id="note-title">
             {{ $note->title }}
-        </span>
+        </span> --}}
+
+        <h1 class="card-h6 text-left mt-2 fs-15">Notes > {{ Illuminate\Support\Str::ucfirst($note->title ) }} </h1>
 
     </div>
 
-    <div class="card-h6">
+    <div class="card-h6 fs-25">
 
-        {{ date('F j, Y, g:i a', strtotime($note->created_at)) }}
+        {{-- {{ date('F j, Y, g:i a', strtotime($note->created_at)) }} --}}
 
+        {{ Illuminate\Support\Str::ucfirst($note->title ) }} 
 
     </div>
+
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-2">
+                <p>Created By : </p>
+            </div>
+            <div class="col-4">
+                <p class="font-weight-700">{{ Illuminate\Support\Str::ucfirst($note->user->name ) }}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-2">
+                <p>Last Modified : </p>
+            </div>
+            <div class="col-4">
+                <p class="font-weight-700">{{ date('F j, Y, g:i a', strtotime($note->created_at)) }}</p>
+            </div>
+        </div>
+        
+    </div>
+
+
 
     @if (auth()->user()->role == 3)
         <div class="card-body mt-3" style="height: 100%">

@@ -1304,11 +1304,11 @@ li.ui-timepicker-selected {
 }
 
 .slide-item.active, .slide-item:hover, .slide-item:focus {
-  color: #222
+  /* color: #222 */
 }
 
 .slide.is-expanded .slide-menu li a:hover {
-  color: #222;
+  /* color: #222; */
   font-weight: 600;
 }
 

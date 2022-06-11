@@ -3,8 +3,8 @@
     <div class="container-fluid"> 
         <div class="d-flex">
             <a class="header-brand" href="{{ url('/') }}">
-                <img src="{{URL::asset('img/brand/logo.png')}}" class="header-brand-img desktop-lgo" alt="Polly logo">
-                <img src="{{URL::asset('img/brand/favicon.png')}}" class="header-brand-img mobile-logo" alt="Polly logo">
+                <img src="{{URL::asset('img/brand/logo.png')}}" class="header-brand-img desktop-lgo" alt="Docua logo">
+                <img src="{{URL::asset('img/brand/favicon.png')}}" class="header-brand-img mobile-logo" alt="Docua logo">
             </a>
             {{-- <div class="app-sidebar__toggle nav-link icon" data-toggle="sidebar">
                 <a class="open-toggle" href="{{url('#')}}">

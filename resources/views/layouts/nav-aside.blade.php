@@ -6,7 +6,7 @@
 <aside class="app-sidebar">
     <div class="app-sidebar__logo">
         <a class="header-brand" href="{{ url('/') }}">
-            <h1 class="mt-3" style="font-family: 'Libre Baskerville', serif; color:#000;">STOCK</h1>
+            <h1 class="mt-3" style="font-family: 'Libre Baskerville', serif; color:#000;">DOCUA</h1>
             {{-- <img src="{{URL::asset('img/brand/logo-3.png')}}" class="header-brand-img desktop-lgo" alt="Admintro logo"> --}}
             <img src="{{ URL::asset('img/brand/favicon.png') }}" class="header-brand-img mobile-logo"
                 alt="Admintro logo">
@@ -85,7 +85,6 @@
                         <i class="angle fa fa-angle-right"></i>
 
 
-
                     </a>
 
                     <ul class="slide-menu">
@@ -94,8 +93,6 @@
                             @if ($subfolder->layer == 2 && $subfolder->main_folder_id == $folder->id)
                                 <li>
                                     <a class="slide-item">{{ $subfolder->name }}
-
-                                       
 
                                         <button class="btn table-actions" type="button" data-toggle="dropdown"
                                             aria-haspopup="true" aria-expanded="false" style="background: none;"><i
@@ -131,7 +128,7 @@
                     </ul>
                 </li>
 
-                <hr class="slide-divider">
+                {{-- <hr class="slide-divider"> --}}
             @endif
         @endforeach
 
