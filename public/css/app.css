@@ -2429,7 +2429,7 @@ textarea.form-control {
 }
 .btn:focus, .btn.focus {
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(121, 122, 124, 0.25);
 }
 .btn.disabled, .btn:disabled {
   opacity: 0.65;
@@ -3152,6 +3152,7 @@ input[type=button].btn-block {
   white-space: nowrap;
   background-color: transparent;
   border: 0;
+  font-size: 12px;
 }
 .dropdown-item:hover, .dropdown-item:focus {
   color: #16181b;
@@ -18115,6 +18116,8 @@ a.card-tabs-item.active {
 .dropdown-menu.show {
   display: block;
   margin: 0;
+  width: 100%;
+  padding: 0;
 }
 
 .dropdown-menu-arrow.dropdown-menu-right:before {
@@ -26608,7 +26611,8 @@ section .alert {
   height: 70vh;
   min-height: 70vh;
   overflow-y: auto;
-  padding: 10px;
+  margin-top: 20px;
+  /* padding: 10px; */
   /* border-top: 1px solid #f2f2f2; */
 }
 .app-header.header .nav-link.icon.nav-link-icon-text :hover{
@@ -26660,10 +26664,10 @@ font-size: 12px;
   color: #fff;
 }
 .sidebar-card{
-  background-color:#fcfcfc;
+  background-color:#FCFCFC;
   border: 1px solid #F6F6F6;
   cursor: pointer;
-  height: 120px;
+  height: 150px;
   box-shadow: none;
 }
 .border-left{
@@ -26699,3 +26703,18 @@ font-size: 12px;
 .fs-15{
   font-size: 15px !important;
 }
+.fs-10{
+  font-size: 10px !important;
+}
+.card-no-radius{
+  border-radius: 0;
+}
+.sidebar-footer{
+  height: 50px;
+  /* position: absolute; */
+  width: 100%;
+  bottom: 0;
+  list-style-type: none;
+  padding-bottom:7.5em;
+  padding-top: 50px;
+  }

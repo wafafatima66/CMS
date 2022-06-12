@@ -1,27 +1,19 @@
 <!-- TOP MENU BAR -->
-<div class="app-header header">
+{{-- <div class="app-header header">
     <div class="container-fluid"> 
         <div class="d-flex">
             <a class="header-brand" href="{{ url('/') }}">
                 <img src="{{URL::asset('img/brand/logo.png')}}" class="header-brand-img desktop-lgo" alt="Docua logo">
                 <img src="{{URL::asset('img/brand/favicon.png')}}" class="header-brand-img mobile-logo" alt="Docua logo">
             </a>
-            {{-- <div class="app-sidebar__toggle nav-link icon" data-toggle="sidebar">
-                <a class="open-toggle" href="{{url('#')}}">
-                    <span class="fa fa-align-left header-icon"></span>
-                </a>
-            </div> --}}
+           
         
            
 
             <!-- MENU BAR -->
             <div class="d-flex order-lg-2 ml-auto"> 
                
-                {{-- <div class="dropdown header-expand" >
-                    <a  class="nav-link icon" id="fullscreen-button">
-                        <span class="header-icon  mdi mdi-arrow-expand-all" id="fullscreen-icon"></span>
-                    </a>
-                </div> --}}
+               
                     
                 <div class="dropdown" >
                     <a  class="nav-link icon">
@@ -78,8 +70,8 @@
                     </div>
                 </div>
             </div>
-            <!-- END MENU BAR -->
+           
         </div>
     </div>
-</div>
-<!-- END TOP MENU BAR -->
+</div> --}}
+

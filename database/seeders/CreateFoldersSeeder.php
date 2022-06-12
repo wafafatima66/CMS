@@ -33,6 +33,7 @@ class CreateFoldersSeeder extends Seeder
                 'layer'=>'1',
                 'main_folder_id'=>'0'
             ],
+           
             
         ];
   

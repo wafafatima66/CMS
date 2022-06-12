@@ -8,13 +8,22 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid h-100">
 
-        <div class="row mt-5-7 h-100">
+@error('note_title')
+{{-- <p class="text-danger">{{ $errors->first('note_title') }}</p> --}}
+<div class="alert alert-danger">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong><i class="fa fa-exclamation-triangle"></i> {{ $errors->first('note_title') }}</strong>
+</div>
+@enderror
 
-            <div class="col-lg-12 col-md-12 col-xm-12 mt-2">
+    <div class="container-fluid h-100 pb-0">
 
-                <div class="card border-0">
+        <div class="row h-100">
+
+            <div class="col-lg-12 col-md-12 col-xm-12 pl-0 pr-0">
+
+                <div class="card border-0 card-no-radius">
 
                     <div class="card-body pt-2">
                         <!-- BOX CONTENT -->
@@ -22,52 +31,9 @@
 
                             <div class="row">
 
-                                <div class="col-md-3 pr-0 pl-0" id="shownotes">
+                                <div class="col-md-3 pl-0" id="shownotes">
 
-                                    {{-- if no ajax is called , then all notes are shown --}}
-
-                                    <h1 class="card-h6 text-left mt-2 fs-25">Notes</h1>
-
-                                    <div class="notes-sidebar background-white mt-5 pl-0 pr-1 ">
-
-                                        @foreach ($notes as $note)
-                                            <div class="card sidebar-card mt-2" id="sidebar-note-card"
-                                                data-attr="{{ $note->id }}">
-
-                                                <div class="card-body">
-
-                                                    <h6 class="mt-3">
-                                                        {{ date('d M', strtotime($note->created_at)) }}</h6>
-
-                                                    {{-- <div class="d-flex justify-content-between align-items-center"> --}}
-
-                                                    <h6 class="font-weight-bold">{{ $note->title }} </h6>
-
-                                                    {{-- <a class="black-hover" data-toggle="modal" id="deleteNoteButton"
-                                                            data-target="#deleteModal" href=""
-                                                            data-attr=" {{ route('notes.delete', $note['id']) }}"><i
-                                                                class="fa fa-trash mr-5"></i></a> --}}
-
-                                                    {{-- </div> --}}
-
-
-                                                    <p class="mt-3">
-                                                        {!! Illuminate\Support\Str::limit($note->note, 50) !!}
-                                                    </p>
-
-
-                                                    {{-- <div
-                                                        class="card-sub-body d-flex justify-content-between align-items-baseline mt-2">
-                                                        <p>{{ $note->user->name }}</p>
-
-                                                    </div> --}}
-
-                                                </div>
-
-                                            </div>
-                                        @endforeach
-
-                                    </div>
+                                   
 
                                 </div>
 
@@ -75,7 +41,7 @@
 
                                     <div id="create-note-div" style="display: none">
 
-                                        <form action="{{ route('notes.store') }}" method="post"
+                                        {{-- <form action="{{ route('notes.store') }}" method="post"
                                             enctype="multipart/form-data">
                                             @csrf
 
@@ -105,11 +71,6 @@
 
                                             </div>
 
-                                            {{-- <div class="card-body" style="height: 320px">
-
-                                                <input type="hidden" name="folder_id" id="getfolderid">
-
-                                            </div> --}}
 
                                             <input type="hidden" name="folder_id" id="getfolderid">
 
@@ -132,12 +93,82 @@
 
                                             <div class="border-0 text-right mb-2 mt-1">
 
-                                                {{-- <a href="" class="btn btn-danger mr-2">{{ __('Cancel') }}</a> --}}
-
                                                 <button type="submit" class="btn btn-black">{{ __('Create') }}</button>
 
                                             </div>
 
+                                        </form> --}}
+
+                                        <form action="{{ route('notes.store') }}" method="post"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        
+                                            <div class="border-bottom">
+                                        
+                                        
+                                                <h1 class="card-h6 text-left mt-2 fs-15">Notes > <span id="note-breadcrumn-title">Note Title</span>  </h1>
+
+                                                
+                                        
+                                            </div>
+                                        
+                                            <div class="card-h6 fs-25 d-flex">
+                                        
+                                                <span id="note-title">
+
+                                                    Note Title
+
+                                                </span>
+
+                                                <span class="ml-5" id="edit-note-title">
+                                                    <i class="fas fa-edit fs-15"></i>
+                                                </span>
+
+                                                <input type="hidden" name="note_title" id="new-note-title">
+                                                <input type="hidden" name="folder_id" id="getfolderid">
+                                        
+                                            </div>
+                                        
+                                            <div class="card-body">
+                                        
+                                                <div class="row">
+                                                    <div class="col-2">
+                                                        <p>Created By : </p>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <p class="font-weight-700">{{ Illuminate\Support\Str::ucfirst(Auth::user()->name ) }}</p>
+                                                    </div>
+                                                </div>
+                                        
+                                                <div class="row">
+                                                    <div class="col-2">
+                                                        <p>Last Modified : </p>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <p class="font-weight-700">{{ date('F j, Y, g:i a', strtotime('today UTC')) }}</p>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        
+                                            @if (auth()->user()->role != 3)
+                                                <div class="input-box mt-3">
+                                        
+                                                    <textarea class="form-control" name="content" rows="12" id="richtext" required>{{ old('content') }}</textarea>
+
+                                                    @error('content')
+                                                        <p class="text-danger">{{ $errors->first('content') }}</p>
+                                                    @enderror
+                                        
+                                                </div>
+                                                @endif
+                                        
+                                                <div class="border-0 text-right mb-2 mt-1">
+                                        
+                                                    <button type="submit" class="btn btn-black">{{ __('Update') }}</button>
+                                        
+                                                </div>
+                                        
                                         </form>
 
                                     </div>
@@ -178,6 +209,42 @@
                 <div class="modal-body" id="deleteModalBody">
                     <div>
                         <!-- DELETE CONFIRMATION -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END MODAL -->
+
+    <!--WARNING MODAL -->
+    <div class="modal fade" id="warningModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel"><i class="mdi mdi-alert-circle-outline color-red"></i>
+                        {{ __('No folder is selected ! ') }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="warningModalBody">
+                    <div>
+                        <div class="modal-body">        
+                            <p>{{ __('Select a folder or a sub folder !') }}</p>   
+                            
+                            <select id="folder_id_from_modal" class="form-control mt-2 fs-10" >
+                                <option value="">Select Folder</option>
+                            @foreach ($folders as $folder)
+                                <option value="{{ $folder->id }}">{{ $folder->name }}</option>
+                            @endforeach
+                        </select> 
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-cancel mr-2" data-dismiss="modal">{{ __('Cancel') }}</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -517,14 +584,27 @@
             // open writing note div 
             $(document).on('click', '#createNoteButton', function(event) {
                 event.preventDefault();
-                let href = $(this).attr('data-attr');
-                console.log(href);
                 let folder_id = $(this).attr('data-attr');
-                $('#getfolderid').val(folder_id);
 
-                // $('#default-note-div').hide();
-                $('#note-div').hide();
-                $('#create-note-div').show();
+                if(folder_id == 0){
+                    $('#warningModal').modal("show");
+
+                    $('#folder_id_from_modal').change(function() {
+                        console.log($(this).val())
+                        folder_id = $(this).val();
+                        $('#warningModal').modal("hide");
+                        $('#getfolderid').val(folder_id);
+                        $('#note-div').hide();
+                        $('#create-note-div').show();
+                    })
+                }
+                else {
+
+                    $('#getfolderid').val(folder_id);
+                    $('#note-div').hide();
+                    $('#create-note-div').show();
+                }
+               
             });
 
 
@@ -550,13 +630,13 @@
                         $('#new-note-title').val(title);
                         $('#title').remove();
                         $('#note-title').html(title);
+                        $('#note-breadcrumn-title').html(title);
                     }, 2000);
                 });
             });
 
 
-            // showing note 
-
+            // showing note box 
             function shownote(note_id) {
                 $('#create-note-div').hide();
                 $.ajax({

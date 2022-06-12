@@ -1,75 +1,102 @@
-<div id="note-div" >
+<div id="note-div">
 
-<form action="{{ route('notes.update', $note->id) }}" method="post" enctype="multipart/form-data">
-    @method('PUT')
-    @csrf
+    <form action="{{ route('notes.update', $note->id) }}" method="post" enctype="multipart/form-data">
+        @method('PUT')
+        @csrf
 
-    
+        <div class="border-bottom">
 
-    <div class="border-bottom">
+            {{-- <h1 class="card-h6 text-left mt-2 fs-15">Notes > {{ Illuminate\Support\Str::ucfirst($note->title ) }} </h1> --}}
 
-        {{-- <span id="note-title">
-            {{ $note->title }}
-        </span> --}}
+            @if ($note->folder->main_folder_id != 0)
+                @php
+                    $main_folder_id = $note->folder->main_folder_id;
+                    $main_folder_name = App\Models\Folder::where('id', $main_folder_id)->value('name');
+                @endphp
 
-        <h1 class="card-h6 text-left mt-2 fs-15">Notes > {{ Illuminate\Support\Str::ucfirst($note->title ) }} </h1>
+                <h1 class="card-h6 text-left mt-2 fs-15">{{ $main_folder_name }} >
+                    {{ Illuminate\Support\Str::ucfirst($note->folder->name) }} </h1>
+            @else
+                <h1 class="card-h6 text-left mt-2 fs-15">
+                    {{ Illuminate\Support\Str::ucfirst($note->folder->name) }} </h1>
+            @endif
 
-    </div>
 
-    <div class="card-h6 fs-25">
 
-        {{-- {{ date('F j, Y, g:i a', strtotime($note->created_at)) }} --}}
+        </div>
 
-        {{ Illuminate\Support\Str::ucfirst($note->title ) }} 
+        <div class="d-flex justify-content-between">
 
-    </div>
+            <div class="card-h6 fs-25">
 
-    <div class="card-body">
+                {{ Illuminate\Support\Str::ucfirst($note->title) }}
 
-        <div class="row">
-            <div class="col-2">
-                <p>Created By : </p>
             </div>
-            <div class="col-4">
-                <p class="font-weight-700">{{ Illuminate\Support\Str::ucfirst($note->user->name ) }}</p>
+
+
+            <button class="btn table-actions" type="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" style="background: none;"><i class="fa fa-ellipsis-v"></i>
+            </button>
+
+            <div class="dropdown-menu table-actions-dropdown" role="menu" aria-labelledby="actions" style="right: 0;
+            width: 10%;
+            transform: translate(460px, 100px);">
+
+
+                <a class="black-hover dropdown-item" data-toggle="modal" id="deleteNoteButton" data-target="#deleteModal"
+                    href="" data-attr=" {{ route('notes.delete', $note['id']) }}">
+                    Delete
+                </a>
+
             </div>
+
         </div>
 
-        <div class="row">
-            <div class="col-2">
-                <p>Last Modified : </p>
+
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-2">
+                    <p>Created By : </p>
+                </div>
+                <div class="col-4">
+                    <p class="font-weight-700">{{ Illuminate\Support\Str::ucfirst($note->user->name) }}</p>
+                </div>
             </div>
-            <div class="col-4">
-                <p class="font-weight-700">{{ date('F j, Y, g:i a', strtotime($note->created_at)) }}</p>
+
+            <div class="row">
+                <div class="col-2">
+                    <p>Last Modified : </p>
+                </div>
+                <div class="col-4">
+                    <p class="font-weight-700">{{ date('F j, Y, g:i a', strtotime($note->created_at)) }}</p>
+                </div>
             </div>
-        </div>
-        
-    </div>
-
-
-
-    @if (auth()->user()->role == 3)
-        <div class="card-body mt-3" style="height: 100%">
-
-            {!! $note->note !!}
-
-        </div>
-    @else
-        <div class="input-box mt-3">
-
-            <textarea class="form-control" name="content" rows="12" id="richtext_3" required>{{ $note->note }}</textarea>
 
         </div>
 
-        <div class="border-0 text-right mb-2 mt-1">
 
-            {{-- <a href="" class="btn btn-danger mr-2">{{ __('Cancel') }}</a> --}}
 
-            <button type="submit" class="btn btn-black">{{ __('Update') }}</button>
+        @if (auth()->user()->role == 3)
+            <div class="card-body mt-3" style="height: 100%">
 
-        </div>
+                {!! $note->note !!}
 
-</form>
+            </div>
+        @else
+            <div class="input-box mt-3">
+
+                <textarea class="form-control" name="content" rows="12" id="richtext_3" required>{{ $note->note }}</textarea>
+
+            </div>
+
+            <div class="border-0 text-right mb-2 mt-1">
+
+                <button type="submit" class="btn btn-black">{{ __('Update') }}</button>
+
+            </div>
+
+    </form>
 
 </div>
 @endif

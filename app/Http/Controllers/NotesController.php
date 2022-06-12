@@ -17,9 +17,18 @@ class NotesController extends Controller
 
             $folder_id = $request->folder_id;
 
-            $folder_name = Folder::where('id',$folder_id)->value('name');
+            if($folder_id == 0 ){
 
-            $notes = Note::with(['user'])->where('folder_id', $folder_id)->latest('created_at')->get();
+                $folder_name = 'Notes';
+
+                $notes = Note::with(['user'])->latest('created_at')->get();
+
+            }else {
+
+                $folder_name = Folder::where('id',$folder_id)->value('name');
+
+                $notes = Note::with(['user'])->where('folder_id', $folder_id)->latest('created_at')->get();
+            }
 
             $html = view('notes.index', compact('folder_id','notes','folder_name'))->render();
 

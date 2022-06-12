@@ -29,9 +29,9 @@
 				@include('layouts.nav-aside')
 
 				<!-- APP CONTENT -->			
-				<div class="app-content main-content ">
+				<div class="app-content main-content pb-0">
 
-					<div class="side-app h-100 pb-5">
+					<div class="side-app h-100 ">
 
 						@include('layouts.nav-top')
 

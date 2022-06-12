@@ -17,6 +17,31 @@
 
     <ul class="side-menu app-sidebar3">
 
+
+        <div class="dropdown show fs-12 ml-3 mr-3">
+
+            <a class="btn btn-white dropdown-toggle pb-3 pt-3 w-100 " href="#" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                {{ Auth::user()->name }}
+            </a>
+
+            <div class="dropdown-menu">
+
+                <a class="dropdown-item d-flex" href="{{ route('logout') }}" onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
+                    <div class="fs-12">{{ __('Logout') }}</div>
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+                <a class="dropdown-item d-flex" href="">
+                    <div class="fs-12">{{ __('Users') }}</div>
+                </a>
+
+            </div>
+
+        </div>
+
         <!-- SEARCH BAR -->
         <div id="search-bar">
             <div>
@@ -32,19 +57,6 @@
         <hr class="slide-divider">
 
 
-        @if (auth()->user()->role != 3)
-            <div class="card-body">
-                <div class="card-sub-body text-center mt-5 mb-5">
-                    {{-- <a href="{{ route('folders') }}" class="btn btn-white w-100 p-3"><i class="fa fa-plus"></i>Add
-                        Folder </a> --}}
-
-                        <button class="btn btn-white w-100 p-3"  data-toggle="modal" id="addFolderButton"
-                        data-target="#addFolderModal" type="button"
-                        data-attr="{{ route('folder.add') }}"><i class="fa fa-plus"></i>    Add Folder</button>
-                </div>
-            </div>
-        @endif
-
         @foreach ($folders as $folder)
             @if ($folder->layer == 1)
                 <li class="slide">
@@ -58,23 +70,21 @@
 
                         <div class="dropdown-menu table-actions-dropdown" role="menu" aria-labelledby="actions">
 
-                            <button class="dropdown-item" id="notes"  data-attr="{{$folder->id}}" >Notes</button>
+                            <button class="dropdown-item" id="notes" data-attr="{{ $folder->id }}">Notes</button>
 
                             @if (auth()->user()->role != 3)
-
-                            <button class="dropdown-item" data-toggle="modal" id="addSubFolderButton"
-                                data-target="#addSubFolderModal" type="button"
-                                data-attr="{{ route('subfolder.add', $folder->id) }}">Add Sub Folder</button>
+                                <button class="dropdown-item" data-toggle="modal" id="addSubFolderButton"
+                                    data-target="#addSubFolderModal" type="button"
+                                    data-attr="{{ route('subfolder.add', $folder->id) }}">Add Sub Folder</button>
 
                                 <button class="dropdown-item" data-toggle="modal" id="editFolderButton"
-                                data-target="#editModal" type="button"
-                                data-attr="{{ route('folder.edit', $folder['id']) }}"> Edit</button>
+                                    data-target="#editModal" type="button"
+                                    data-attr="{{ route('folder.edit', $folder['id']) }}"> Edit</button>
 
-                            <button class="dropdown-item" data-toggle="modal" id="deleteFolderButton"
-                                data-target="#deleteModal" type="button"
-                                data-attr="{{ route('folder.delete', $folder['id']) }}"> Delete</button>
-
-                                @endif
+                                <button class="dropdown-item" data-toggle="modal" id="deleteFolderButton"
+                                    data-target="#deleteModal" type="button"
+                                    data-attr="{{ route('folder.delete', $folder['id']) }}"> Delete</button>
+                            @endif
 
 
                         </div>
@@ -102,22 +112,21 @@
                                         <div class="dropdown-menu table-actions-dropdown" role="menu"
                                             aria-labelledby="actions">
 
-                                            <button class="dropdown-item" id="notes"  data-attr="{{$subfolder->id}}" >Notes</button>
+                                            <button class="dropdown-item" id="notes"
+                                                data-attr="{{ $subfolder->id }}">Notes</button>
 
                                             @if (auth()->user()->role != 3)
+                                                <button class="dropdown-item" data-toggle="modal"
+                                                    id="editSubFolderButton" data-target="#editModal" type="button"
+                                                    data-attr="{{ route('subfolder.edit', $subfolder['id']) }}">
+                                                    Edit</button>
 
-                                            <button class="dropdown-item" data-toggle="modal" id="editSubFolderButton"
-                                                data-target="#editModal" type="button"
-                                                data-attr="{{ route('subfolder.edit', $subfolder['id']) }}">
-                                                Edit</button>
-
-                                            <button class="dropdown-item" data-toggle="modal"
-                                                id="deleteSubFolderButton" data-target="#deleteModal" type="button"
-                                                data-attr="{{ route('subfolder.delete', $subfolder['id']) }}">
-                                                Delete</button>
-
+                                                <button class="dropdown-item" data-toggle="modal"
+                                                    id="deleteSubFolderButton" data-target="#deleteModal" type="button"
+                                                    data-attr="{{ route('subfolder.delete', $subfolder['id']) }}">
+                                                    Delete</button>
                                             @endif
-                                            
+
                                         </div>
 
                                     </a>
@@ -132,6 +141,36 @@
             @endif
         @endforeach
 
+
+        <div class="sidebar-footer">
+
+            @if (auth()->user()->role != 3)
+        <div class="card-body mt-5">
+            <div class="card-sub-body text-center mt-5 mb-5">
+                {{-- <a href="{{ route('folders') }}" class="btn btn-white w-100 p-3"><i class="fa fa-plus"></i>Add
+                    Folder </a> --}}
+
+                <button class="btn btn-white w-100 p-3 text-left" data-toggle="modal" id="addFolderButton"
+                    data-target="#addFolderModal" type="button" data-attr="{{ route('folder.add') }}"><i
+                        class="fa fa-plus mr-5"></i> Add new folder</button>
+            </div>
+
+            <div class="card-sub-body text-center mb-5">
+                <button class="btn btn-white w-100 p-3 text-left" data-toggle="" id=""
+                    data-target="" type="button" data-attr=""><i
+                        class="fa fa-cogs mr-5"></i> Settings</button>
+            </div>
+
+        </div>
+
+        {{-- <div class="card-body ">
+           
+        </div> --}}
+
+    @endif
+
+        </div>
+        
 
     </ul>
 </aside>
@@ -269,11 +308,8 @@
 <script src="{{ URL::asset('js/jquery-3.6.0.min.js') }}"></script>
 
 <script>
-
-
-
-// ADD MAIN FOLDER
-$(document).on('click', '#addFolderButton', function(event) {
+    // ADD MAIN FOLDER
+    $(document).on('click', '#addFolderButton', function(event) {
         event.preventDefault();
         let href = $(this).attr('data-attr');
         console.log(href)
@@ -417,26 +453,29 @@ $(document).on('click', '#addFolderButton', function(event) {
         })
     });
 
-    // OPEN NOTES 
+    // OPEN NOTES SIDEBAR
+
+    function show_notes_sidebar(folder_id) {
+        $.ajax({
+            type: 'GET',
+            url: '{{ url('notes') }}',
+            data: {
+                folder_id: folder_id
+            },
+            headers: {
+                'X-CSRF-Token': '{{ csrf_token() }}',
+            },
+            success: function(data) {
+                $("#shownotes").html(data);
+            }
+        });
+    }
+
+    show_notes_sidebar(0);
 
     $(document).on('click', '#notes', function(event) {
         // console.log('ji')
         let folder_id = $(this).attr('data-attr');
-        $.ajax({
-               type:'GET',
-               url:'{{url("notes")}}',
-               data :{
-                   folder_id : folder_id
-               },
-               headers: {
-                    'X-CSRF-Token': '{{ csrf_token() }}',
-                },
-               success:function(data) {
-                  $("#shownotes").html(data);
-               }
-            });
+        show_notes_sidebar(folder_id);
     });
-
-    
-
 </script>
