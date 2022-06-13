@@ -41,7 +41,7 @@
 
                 <button type="button" class=" btn black-hover p-2 m-2 " id="commentbutton"
                     data-attr=" {{ $note['id'] }} ">
-                    <i class="fas fa-comment-dots"></i>
+                    <i class="fas fa-comment-dots "></i>
                 </button>
 
             </div>
@@ -54,8 +54,8 @@
         <div id="commentbox">
 
             <div class="d-flex justify-content-between p-2">
-                <h1 class="card-h6 text-center mt-3 fs-25 pl-1">Comments</h1>
-                <span id="close-slider" class="float-right btn "><i class="fas fa-times-circle mt-5"></i></span>
+                <h1 class="card-h6 text-center mt-3 fs-25 pl-1 mt-1">Comments</h1>
+                <span id="close-slider" class="float-right btn "><i class="fas fa-times-circle mt-3 fs-25"></i></span>
             </div>
 
 
@@ -77,19 +77,19 @@
         <div class="card-body">
 
             <div class="row">
-                <div class="col-2">
+                <div class="col-md-2">
                     <p>Created By : </p>
                 </div>
-                <div class="col-4">
+                <div class="col-md-4">
                     <p class="font-weight-700">{{ Illuminate\Support\Str::ucfirst($note->user->name) }}</p>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-2">
+                <div class="col-md-2">
                     <p>Last Modified : </p>
                 </div>
-                <div class="col-4">
+                <div class="col-md-4">
                     <p class="font-weight-700">{{ date('F j, Y, g:i a', strtotime($note->created_at)) }}</p>
                 </div>
             </div>
@@ -99,11 +99,15 @@
 
 
         @if (auth()->user()->role == 3)
-            <div class="card-body mt-3" style="height: 100%">
+            <div class="card-body " style="height: 100%">
 
-                {!! $note->note !!}
+                <div class="mt-5-7">
+                    {!! $note->note !!}
+                </div>
+                
 
             </div>
+
         @else
             <div class="input-box mt-3">
 
@@ -270,6 +274,7 @@
     });
 
     // load comments function
+
     function showComments(note_id){
         $.ajax({
             type: 'GET',

@@ -33,6 +33,14 @@
 
 					<div class="side-app h-100 ">
 
+						{{-- toggle for responsive --}}
+
+						<div class="app-sidebar__toggle nav-link icon p-0 m-0" data-toggle="sidebar">
+							<a class="open-toggle" href="{{url('#')}}">
+								<span class="fa fa-align-left  black-hover pt-2"></span>
+							</a>
+						</div>
+
 						@include('layouts.nav-top')
 
                         @include('layouts.flash')

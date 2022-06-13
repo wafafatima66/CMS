@@ -4,6 +4,9 @@
 
 <!-- SIDE MENU BAR -->
 <aside class="app-sidebar">
+
+   
+
     <div class="app-sidebar__logo">
         <a class="header-brand" href="{{ url('/') }}">
             <h1 class="mt-3" style="font-family: 'Libre Baskerville', serif; color:#000;">DOCUA</h1>
@@ -34,9 +37,12 @@
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>
-                <a class="dropdown-item d-flex" href="">
-                    <div class="fs-12">{{ __('Users') }}</div>
-                </a>
+                @if ( Auth::user()->role == 1)
+                    <a class="dropdown-item d-flex" href="">
+                        <div class="fs-12">{{ __('Users') }}</div>
+                    </a>
+                @endif
+               
 
             </div>
 
@@ -46,9 +52,9 @@
         <div id="search-bar">
             <div>
                 <a class="nav-link icon">
-                    <form id="search-field" action="" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <input type="search" name='keyword' placeholder="Search Notes">
+                    <form id="search-field" >
+                        
+                        <input type="search" name='keyword' placeholder="Search Notes" id="searchNotes">
                     </form>
                 </a>
             </div>
@@ -455,12 +461,13 @@
 
     // OPEN NOTES SIDEBAR
 
-    function show_notes_sidebar(folder_id) {
+    function show_notes_sidebar(folder_id , search) {
         $.ajax({
             type: 'GET',
             url: '{{ url('notes') }}',
             data: {
-                folder_id: folder_id
+                folder_id: folder_id,
+                search : search
             },
             headers: {
                 'X-CSRF-Token': '{{ csrf_token() }}',
@@ -471,11 +478,18 @@
         });
     }
 
-    show_notes_sidebar(0);
+    show_notes_sidebar(0,'0');
 
     $(document).on('click', '#notes', function(event) {
         // console.log('ji')
         let folder_id = $(this).attr('data-attr');
-        show_notes_sidebar(folder_id);
+        show_notes_sidebar(folder_id,'0');
+    });
+
+    // SEARCH NOTES 
+    $(document).on('keypress', '#searchNotes', function(event) {
+        console.log('ji')
+        var search =  $('#searchNotes').val();
+        show_notes_sidebar(0,search);
     });
 </script>

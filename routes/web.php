@@ -27,7 +27,7 @@ Auth::routes();
 // Route::middleware('auth')->group(function () {
 
 
-
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->middleware('auth');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
 Route::get('/folders', [FolderController::class, 'index'])->name('folders')->middleware('auth');

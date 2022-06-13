@@ -29418,7 +29418,7 @@ section .alert {
     bottom: 0;
     list-style-type: none;
     padding-bottom: 7.5em;
-    padding-top: 50px;
+    padding-top: 190px;
 }
 
 /* comments section */
@@ -29445,3 +29445,26 @@ section .alert {
     background-color: #fff;
     /* height: 100px; */
 }
+
+/* show toggle responsive */
+.app-sidebar__toggle{
+    display: none;
+    color: #000;
+    background-color: #fff;
+}
+/* @media (min-width: 768px) {
+    .app-sidebar__toggle{
+        display: block;
+    }
+  } */
+  @media (max-width: 767px) {
+    .app-sidebar__toggle{
+        display: block;
+    }
+  }
+  @media (max-width: 480px) {
+    .app-sidebar__toggle {
+      padding: 5px !important;
+      display: block;
+    }
+  }
