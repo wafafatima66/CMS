@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\FolderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotesController;
@@ -24,6 +25,8 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 // Route::middleware('auth')->group(function () {
+
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
@@ -54,5 +57,9 @@ Route::put('/notes/{note}/update',[NotesController::class, 'update'])->name('not
 Route::delete('/notes/{note}', [NotesController::class, 'destroy'])->name('notes.destroy'); 
 Route::get('/notes/{note}', [NotesController::class, 'delete'])->name('notes.delete'); 
 // Route::get('/note/show/box',[NotesController::class, 'noteBox'])->name('note.show.box');
+
+// comments
+Route::get('/comments/show',[CommentsController::class, 'show'])->name('comments.show');
+Route::post('/comments',[CommentsController::class, 'store']);
 // });
 

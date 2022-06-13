@@ -22,22 +22,28 @@ class CreateNotesSeeder extends Seeder
 
         $note = [
             [
-                'note' => $this->faker->slug(),
+                'note' => $this->faker->paragraph(6),
                'folder_id'=>'1',
                 'user_id'=>'1',
-                'title'=>$this->faker->title()
+                'title'=>$this->faker->realText(10)
             ],
             [
-                'note' => $this->faker->slug(),
+                'note' => $this->faker->paragraph(6),
                'folder_id'=>'1',
                 'user_id'=>'1',
-                'title'=>$this->faker->title()
+                'title'=>$this->faker->realText(10)
             ],
             [
-                'note' => $this->faker->Text() , 
+                'note' => $this->faker->paragraph(6) , 
                'folder_id'=>'1',
                 'user_id'=>'1',
-                'title'=>$this->faker->title()
+                'title'=>$this->faker->realText(10)
+            ],
+            [
+                'note' => $this->faker->paragraph(6) , 
+               'folder_id'=>'1',
+                'user_id'=>'1',
+                'title'=>$this->faker->realText(10)
             ],
             
         ];

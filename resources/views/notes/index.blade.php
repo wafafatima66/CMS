@@ -45,7 +45,13 @@
 
 
                 <p class="mt-3">
-                    {!! Illuminate\Support\Str::limit($note->note, 50) !!}
+                    @php
+                        $html = $note->note;
+                        $text = strip_tags($html);
+                        $short_text = Illuminate\Support\Str::limit($text, 20);
+                    @endphp
+                    {{-- {!! Illuminate\Support\Str::limit ($note->note, 50) !!} --}}
+                    {{ $short_text }}
                 </p>
 
                 @if ($note->folder->main_folder_id != 0)

@@ -1008,7 +1008,8 @@ a.chip:hover {
 }
 
 .custom-switch-input:checked ~ .custom-switch-indicator {
-  background: #007BFF;
+  /* background: #007BFF; */
+  background: #000;
 }
 .custom-switch-input:focus ~ .custom-switch-indicator {
   border-color: #007BFF;

@@ -558,7 +558,7 @@
 
 
 
-            // DELETE MAIN FOLDER CONFIRMATION MODAL
+            // DELETE NOTE CONFIRMATION MODAL
             $(document).on('click', '#deleteNoteButton', function(event) {
                 event.preventDefault();
                 let href = $(this).attr('data-attr');

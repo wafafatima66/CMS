@@ -25,7 +25,7 @@
                 {{ Auth::user()->name }}
             </a>
 
-            <div class="dropdown-menu">
+            <div class="dropdown-menu w-100">
 
                 <a class="dropdown-item d-flex" href="{{ route('logout') }}" onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">

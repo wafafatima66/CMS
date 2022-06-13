@@ -5,15 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Note extends Model
+class Comment extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'note',
-        'folder_id',
-        'user_id',
-        'title'
+        'comment',
+        'note_id',
+        'user_id'
     ];
 
     public function user()
@@ -21,14 +20,8 @@ class Note extends Model
       return $this->belongsTo(User::class);
     }
 
-    public function folder()
+    public function note()
     {
       return $this->belongsTo(Folder::class);
     }
-
-    public function comments()
-   { 
-       return $this->hasMany(Comment::class);
-   }
-
 }

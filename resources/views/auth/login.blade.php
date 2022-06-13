@@ -45,19 +45,26 @@
                         @enderror                            
                     </div>
 
-                    <div class="form-group">  
-                        <div class="d-flex">                        
-                          
+                    <label class="custom-switch">
+                        <input type="checkbox" class="custom-switch-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                        <span class="custom-switch-indicator"></span>
+                        <span class="custom-switch-description">{{ __('Keep me logged in') }}</span>
+                    </label>  
+
+                    {{-- <div class="form-group">  
+                        <div class="d-flex">  
                             <div class="ml-auto">
                                 @if (Route::has('password.request'))
                                     <a class="fs-12" href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a>
                                 @endif
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
+
+                    
 
                     <div class="form-group mb-0">                        
-                        <button type="submit" class="btn btn-black mr-2">{{ __('Login') }}</button>                         
+                        <button type="submit" class="btn btn-black mr-2 fs-12">{{ __('Login') }}</button>                         
                     </div>
 
 

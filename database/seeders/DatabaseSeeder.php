@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CreateNotesSeeder::class);
         $this->call(CreateUsersSeeder::class);
         $this->call(CreateFoldersSeeder::class);
+        $this->call(CreateCommentsSeeder::class);
     }
 }

@@ -33,25 +33,46 @@
 
             </div>
 
-
-            <button class="btn table-actions" type="button" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false" style="background: none;"><i class="fa fa-ellipsis-v"></i>
-            </button>
-
-            <div class="dropdown-menu table-actions-dropdown" role="menu" aria-labelledby="actions" style="right: 0;
-            width: 10%;
-            transform: translate(460px, 100px);">
-
-
-                <a class="black-hover dropdown-item" data-toggle="modal" id="deleteNoteButton" data-target="#deleteModal"
+            <div>
+                <a class="black-hover  p-2 m-2" data-toggle="modal" id="deleteNoteButton" data-target="#deleteModal"
                     href="" data-attr=" {{ route('notes.delete', $note['id']) }}">
-                    Delete
+                    <i class="fa fa-trash mt-5"></i>
                 </a>
+
+                <button type="button" class=" btn black-hover p-2 m-2 " id="commentbutton"
+                    data-attr=" {{ $note['id'] }} ">
+                    <i class="fas fa-comment-dots"></i>
+                </button>
 
             </div>
 
+
         </div>
 
+        {{-- comments --}}
+
+        <div id="commentbox">
+
+            <div class="d-flex justify-content-between p-2">
+                <h1 class="card-h6 text-center mt-3 fs-25 pl-1">Comments</h1>
+                <span id="close-slider" class="float-right btn "><i class="fas fa-times-circle mt-5"></i></span>
+            </div>
+
+
+            <div class="slider-inner p-1">
+
+
+                <input type="text" class="form-control fs-12" placeholder="Write Down Your Comments" id="addComments" data-attr=" {{ $note['id'] }}" >
+                <p id="alertComments" class="text-danger"></p>
+
+                <div id="comments-inner">
+
+                </div>
+
+            </div>
+
+
+        </div>
 
         <div class="card-body">
 
@@ -246,5 +267,76 @@
         maxlength: 0,
         callback: undefined,
         useTabForNext: false
+    });
+
+    // load comments function
+    function showComments(note_id){
+        $.ajax({
+            type: 'GET',
+            url: '{{ url('comments/show') }}',
+            data: {
+                note_id: note_id
+            },
+            headers: {
+                'X-CSRF-Token': '{{ csrf_token() }}',
+            },
+            success: function(data) {
+                $("#comments-inner").html(data);
+            }
+        });
+    }
+    // comments
+   
+    $('#commentbutton').unbind().click(function() {
+       
+        let note_id = $(this).attr('data-attr');
+        console.log(note_id)
+        showComments(note_id)
+        $('#commentbox').animate({
+            right: "400px"
+        }, 1000);
+    });
+
+    $('#close-slider').click(function() {
+        $('#commentbox').animate({
+            right: "-1400px"
+        }, 2000);
+    });
+
+    // adding comments 
+
+    // $(document).on('keyup', '#addComments', function(event) {
+        $('#addComments').unbind().keyup(function() {
+        event.preventDefault();
+
+        if (event.keyCode === 13) {
+            var comment = $('#addComments').val();
+            var note_id = $(this).attr('data-attr');
+            console.log(note_id)
+            $.ajax({
+                type: 'POST',
+                url: 'comments',
+                data: {
+                    comment: comment,
+                    note_id: note_id
+                },
+                headers: {
+                'X-CSRF-Token': '{{ csrf_token() }}',
+                },
+                // dataType: 'json',
+                success: function(data) {
+                    if(data == 'success'){
+                        showComments(note_id);
+                        $('#addComments').val('');
+                        
+                    }else{
+                        $('#alertComments').html('Comments Not added , Try again !');
+                    }
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        }
     });
 </script>
