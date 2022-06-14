@@ -10,11 +10,12 @@
 @section('content')
 
 @error('note_title')
-{{-- <p class="text-danger">{{ $errors->first('note_title') }}</p> --}}
+
 <div class="alert alert-danger">
     <button type="button" class="close" data-dismiss="alert">×</button>
     <strong><i class="fa fa-exclamation-triangle"></i> {{ $errors->first('note_title') }}</strong>
 </div>
+
 @enderror
 
     <div class="container-fluid h-100 pb-0">
@@ -40,64 +41,6 @@
                                 <div class="col-md-9 border-left">
 
                                     <div id="create-note-div" style="display: none">
-
-                                        {{-- <form action="{{ route('notes.store') }}" method="post"
-                                            enctype="multipart/form-data">
-                                            @csrf
-
-                                            <div class="card-header border-bottom">
-
-                                                <span id="note-title">
-
-                                                    Note Title
-
-                                                    @error('note_title')
-                                                        <p class="text-danger">{{ $errors->first('note_title') }}</p>
-                                                    @enderror
-
-                                                </span>
-
-                                                <span class="ml-5" id="edit-note-title">
-                                                    <i class="fas fa-edit"></i>
-                                                </span>
-
-                                                <input type="hidden" name="note_title" id="new-note-title">
-
-                                            </div>
-
-                                            <div class="card-h6">
-
-                                                @php echo date('F j, Y, g:i a'); @endphp
-
-                                            </div>
-
-
-                                            <input type="hidden" name="folder_id" id="getfolderid">
-
-                                            @error('folder_id')
-                                                <p class="text-danger">{{ $errors->first('folder_id') }}</p>
-                                            @enderror
-
-                                            @if (auth()->user()->role != 3)
-                                                <div class="input-box">
-
-                                                    <textarea class="form-control" name="content" rows="12" id="richtext" required>{{ old('content') }}</textarea>
-
-                                                    @error('content')
-                                                        <p class="text-danger">{{ $errors->first('content') }}</p>
-                                                    @enderror
-
-                                                </div>
-                                            @endif
-
-
-                                            <div class="border-0 text-right mb-2 mt-1">
-
-                                                <button type="submit" class="btn btn-black">{{ __('Create') }}</button>
-
-                                            </div>
-
-                                        </form> --}}
 
                                         <form action="{{ route('notes.store') }}" method="post"
                                         enctype="multipart/form-data">
@@ -235,8 +178,12 @@
                             
                             <select id="folder_id_from_modal" class="form-control mt-2 fs-10" >
                                 <option value="">Select Folder</option>
+
                             @foreach ($folders as $folder)
-                                <option value="{{ $folder->id }}">{{ $folder->name }}</option>
+                                @if ($folder->main_folder_id != 0)
+                                    <option value="{{ $folder->id }}">{{ $folder->name }}</option> 
+                                @endif
+                                
                             @endforeach
                         </select> 
 

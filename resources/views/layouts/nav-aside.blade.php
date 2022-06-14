@@ -5,21 +5,19 @@
 <!-- SIDE MENU BAR -->
 <aside class="app-sidebar">
 
-   
-
     <div class="app-sidebar__logo">
+
         <a class="header-brand" href="{{ url('/') }}">
+
             <h1 class="mt-3" style="font-family: 'Libre Baskerville', serif; color:#000;">DOCUA</h1>
-            {{-- <img src="{{URL::asset('img/brand/logo-3.png')}}" class="header-brand-img desktop-lgo" alt="Admintro logo"> --}}
+
             <img src="{{ URL::asset('img/brand/favicon.png') }}" class="header-brand-img mobile-logo"
                 alt="Admintro logo">
         </a>
+
     </div>
 
-
-
     <ul class="side-menu app-sidebar3">
-
 
         <div class="dropdown show fs-12 ml-3 mr-3">
 
@@ -34,151 +32,157 @@
                 document.getElementById('logout-form').submit();">
                     <div class="fs-12">{{ __('Logout') }}</div>
                 </a>
+
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>
-                @if ( Auth::user()->role == 1)
-                    <a class="dropdown-item d-flex" href="">
+
+                @if (Auth::user()->role == 1)
+                    <a class="dropdown-item d-flex" href="{{ route('user.index') }}">
                         <div class="fs-12">{{ __('Users') }}</div>
                     </a>
                 @endif
-               
 
             </div>
 
         </div>
 
-        <!-- SEARCH BAR -->
-        <div id="search-bar">
-            <div>
-                <a class="nav-link icon">
-                    <form id="search-field" >
-                        
-                        <input type="search" name='keyword' placeholder="Search Notes" id="searchNotes">
-                    </form>
-                </a>
+        @if (request()->is('user'))
+
+            <a class="btn btn-white pb-3 pt-3 w-100 mt-5 fs-12 " href="{{ route('home') }}">{{ __('Notes') }}
+            </a>
+
+        @else
+            <!-- SEARCH BAR -->
+            <div id="search-bar">
+                <div>
+                    <a class="nav-link icon">
+                        <form id="search-field">
+
+                            <input type="search" name='keyword' placeholder="Search Notes" id="searchNotes">
+                        </form>
+                    </a>
+                </div>
             </div>
-        </div>
-        <!-- END SEARCH BAR -->
-        <hr class="slide-divider">
+            <!-- END SEARCH BAR -->
+            <hr class="slide-divider">
+
+            @foreach ($folders as $folder)
+
+                @if ($folder->layer == 1)
+
+                    <li class="slide">
+
+                        <a class="side-menu__item" data-toggle="slide" href="{{ url('#') }}">
+
+                            <button class="btn table-actions" type="button" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" style="background: none;"><i class="fa fa-ellipsis-v"></i>
+                            </button>
+
+                            <div class="dropdown-menu table-actions-dropdown" role="menu" aria-labelledby="actions">
+
+                                @if (auth()->user()->role != 3)
+                                    <button class="dropdown-item" data-toggle="modal" id="addSubFolderButton"
+                                        data-target="#addSubFolderModal" type="button"
+                                        data-attr="{{ route('subfolder.add', $folder->id) }}">Add Sub Folder</button>
+
+                                    <button class="dropdown-item" data-toggle="modal" id="editFolderButton"
+                                        data-target="#editModal" type="button"
+                                        data-attr="{{ route('folder.edit', $folder['id']) }}"> Edit</button>
+
+                                    <button class="dropdown-item" data-toggle="modal" id="deleteFolderButton"
+                                        data-target="#deleteModal" type="button"
+                                        data-attr="{{ route('folder.delete', $folder['id']) }}"> Delete</button>
+                                @endif
 
 
-        @foreach ($folders as $folder)
-            @if ($folder->layer == 1)
-                <li class="slide">
-                    <a class="side-menu__item" data-toggle="slide" href="{{ url('#') }}">
+                            </div>
 
-                        {{-- <span class="side-menu__icon mdi mdi-account-convert"></span> --}}
+                            <span class="side-menu__label">{{ $folder->name }}</span>
 
-                        <button class="btn table-actions" type="button" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false" style="background: none;"><i class="fa fa-ellipsis-v"></i>
-                        </button>
+                            <i class="angle fa fa-angle-right"></i>
 
-                        <div class="dropdown-menu table-actions-dropdown" role="menu" aria-labelledby="actions">
+                        </a>
 
-                            <button class="dropdown-item" id="notes" data-attr="{{ $folder->id }}">Notes</button>
+                        <ul class="slide-menu">
 
-                            @if (auth()->user()->role != 3)
-                                <button class="dropdown-item" data-toggle="modal" id="addSubFolderButton"
-                                    data-target="#addSubFolderModal" type="button"
-                                    data-attr="{{ route('subfolder.add', $folder->id) }}">Add Sub Folder</button>
+                            @foreach ($folders as $subfolder)
 
-                                <button class="dropdown-item" data-toggle="modal" id="editFolderButton"
-                                    data-target="#editModal" type="button"
-                                    data-attr="{{ route('folder.edit', $folder['id']) }}"> Edit</button>
+                                @if ($subfolder->layer == 2 && $subfolder->main_folder_id == $folder->id)
 
-                                <button class="dropdown-item" data-toggle="modal" id="deleteFolderButton"
-                                    data-target="#deleteModal" type="button"
-                                    data-attr="{{ route('folder.delete', $folder['id']) }}"> Delete</button>
-                            @endif
+                                    <li>
 
+                                        <a class="slide-item">{{ $subfolder->name }}
 
+                                            <button class="btn table-actions" type="button" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false" style="background: none;"><i
+                                                    class="fa fa-ellipsis-v"></i>
+                                            </button>
+
+                                            <div class="dropdown-menu table-actions-dropdown" role="menu"
+                                                aria-labelledby="actions">
+
+                                                <button class="dropdown-item" id="notes"
+                                                    data-attr="{{ $subfolder->id }}">Notes</button>
+
+                                                @if (auth()->user()->role != 3)
+                                                    <button class="dropdown-item" data-toggle="modal"
+                                                        id="editSubFolderButton" data-target="#editModal" type="button"
+                                                        data-attr="{{ route('subfolder.edit', $subfolder['id']) }}">
+                                                        Edit</button>
+
+                                                    <button class="dropdown-item" data-toggle="modal"
+                                                        id="deleteSubFolderButton" data-target="#deleteModal"
+                                                        type="button"
+                                                        data-attr="{{ route('subfolder.delete', $subfolder['id']) }}">
+                                                        Delete</button>
+                                                @endif
+
+                                            </div>
+
+                                        </a>
+
+                                    </li>
+                                @endif
+
+                            @endforeach
+
+                        </ul>
+
+                    </li>
+
+                @endif
+
+            @endforeach
+
+            <div class="sidebar-footer">
+
+                @if (auth()->user()->role != 3)
+
+                    <div class="card-body mt-5">
+
+                        <div class="card-sub-body text-center mt-5 mb-5">
+                   
+                            <button class="btn btn-white w-100 p-3 text-left" data-toggle="modal" id="addFolderButton"
+                                data-target="#addFolderModal" type="button" data-attr="{{ route('folder.add') }}"><i
+                                    class="fa fa-plus mr-5"></i> Add new folder</button>
                         </div>
 
+                        <div class="card-sub-body text-center mb-5">
+                            <button class="btn btn-white w-100 p-3 text-left" data-toggle="" id="" data-target=""
+                                type="button" data-attr=""><i class="fa fa-cogs mr-5"></i> Settings</button>
+                        </div>
 
-                        <span class="side-menu__label">{{ $folder->name }}</span>
+                    </div>
 
-                        <i class="angle fa fa-angle-right"></i>
+                @endif
 
-
-                    </a>
-
-                    <ul class="slide-menu">
-
-                        @foreach ($folders as $subfolder)
-                            @if ($subfolder->layer == 2 && $subfolder->main_folder_id == $folder->id)
-                                <li>
-                                    <a class="slide-item">{{ $subfolder->name }}
-
-                                        <button class="btn table-actions" type="button" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false" style="background: none;"><i
-                                                class="fa fa-ellipsis-v"></i>
-                                        </button>
-
-                                        <div class="dropdown-menu table-actions-dropdown" role="menu"
-                                            aria-labelledby="actions">
-
-                                            <button class="dropdown-item" id="notes"
-                                                data-attr="{{ $subfolder->id }}">Notes</button>
-
-                                            @if (auth()->user()->role != 3)
-                                                <button class="dropdown-item" data-toggle="modal"
-                                                    id="editSubFolderButton" data-target="#editModal" type="button"
-                                                    data-attr="{{ route('subfolder.edit', $subfolder['id']) }}">
-                                                    Edit</button>
-
-                                                <button class="dropdown-item" data-toggle="modal"
-                                                    id="deleteSubFolderButton" data-target="#deleteModal" type="button"
-                                                    data-attr="{{ route('subfolder.delete', $subfolder['id']) }}">
-                                                    Delete</button>
-                                            @endif
-
-                                        </div>
-
-                                    </a>
-
-                                </li>
-                            @endif
-                        @endforeach
-                    </ul>
-                </li>
-
-                {{-- <hr class="slide-divider"> --}}
-            @endif
-        @endforeach
-
-
-        <div class="sidebar-footer">
-
-            @if (auth()->user()->role != 3)
-        <div class="card-body mt-5">
-            <div class="card-sub-body text-center mt-5 mb-5">
-                {{-- <a href="{{ route('folders') }}" class="btn btn-white w-100 p-3"><i class="fa fa-plus"></i>Add
-                    Folder </a> --}}
-
-                <button class="btn btn-white w-100 p-3 text-left" data-toggle="modal" id="addFolderButton"
-                    data-target="#addFolderModal" type="button" data-attr="{{ route('folder.add') }}"><i
-                        class="fa fa-plus mr-5"></i> Add new folder</button>
             </div>
 
-            <div class="card-sub-body text-center mb-5">
-                <button class="btn btn-white w-100 p-3 text-left" data-toggle="" id=""
-                    data-target="" type="button" data-attr=""><i
-                        class="fa fa-cogs mr-5"></i> Settings</button>
-            </div>
-
-        </div>
-
-        {{-- <div class="card-body ">
-           
-        </div> --}}
-
-    @endif
-
-        </div>
-        
+        @endif
 
     </ul>
+    
 </aside>
 
 <!--ADD MAIN FOLDER MODAL -->
@@ -461,13 +465,13 @@
 
     // OPEN NOTES SIDEBAR
 
-    function show_notes_sidebar(folder_id , search) {
+    function show_notes_sidebar(folder_id, search) {
         $.ajax({
             type: 'GET',
             url: '{{ url('notes') }}',
             data: {
                 folder_id: folder_id,
-                search : search
+                search: search
             },
             headers: {
                 'X-CSRF-Token': '{{ csrf_token() }}',
@@ -478,18 +482,18 @@
         });
     }
 
-    show_notes_sidebar(0,'0');
+    show_notes_sidebar(0, '0');
 
     $(document).on('click', '#notes', function(event) {
         // console.log('ji')
         let folder_id = $(this).attr('data-attr');
-        show_notes_sidebar(folder_id,'0');
+        show_notes_sidebar(folder_id, '0');
     });
 
     // SEARCH NOTES 
     $(document).on('keypress', '#searchNotes', function(event) {
         console.log('ji')
-        var search =  $('#searchNotes').val();
-        show_notes_sidebar(0,search);
+        var search = $('#searchNotes').val();
+        show_notes_sidebar(0, search);
     });
 </script>

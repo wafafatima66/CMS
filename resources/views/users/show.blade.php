@@ -2,7 +2,6 @@
 
     <form action="{{ route('notes.update', $note->id) }}" method="post" enctype="multipart/form-data">
         @method('PUT')
-        
         @csrf
 
         <div class="border-bottom">
@@ -63,8 +62,7 @@
             <div class="slider-inner p-1">
 
 
-                <input type="text" class="form-control fs-12" placeholder="Write Down Your Comments" id="addComments"
-                    data-attr=" {{ $note['id'] }}">
+                <input type="text" class="form-control fs-12" placeholder="Write Down Your Comments" id="addComments" data-attr=" {{ $note['id'] }}" >
                 <p id="alertComments" class="text-danger"></p>
 
                 <div id="comments-inner">
@@ -106,9 +104,10 @@
                 <div class="mt-5-7">
                     {!! $note->note !!}
                 </div>
-
+                
 
             </div>
+
         @else
             <div class="input-box mt-3">
 
@@ -276,7 +275,7 @@
 
     // load comments function
 
-    function showComments(note_id) {
+    function showComments(note_id){
         $.ajax({
             type: 'GET',
             url: '{{ url('comments/show') }}',
@@ -292,9 +291,9 @@
         });
     }
     // comments
-
+   
     $('#commentbutton').unbind().click(function() {
-
+       
         let note_id = $(this).attr('data-attr');
         console.log(note_id)
         showComments(note_id)
@@ -312,7 +311,7 @@
     // adding comments 
 
     // $(document).on('keyup', '#addComments', function(event) {
-    $('#addComments').unbind().keyup(function() {
+        $('#addComments').unbind().keyup(function() {
         event.preventDefault();
 
         if (event.keyCode === 13) {
@@ -327,15 +326,15 @@
                     note_id: note_id
                 },
                 headers: {
-                    'X-CSRF-Token': '{{ csrf_token() }}',
+                'X-CSRF-Token': '{{ csrf_token() }}',
                 },
                 // dataType: 'json',
                 success: function(data) {
-                    if (data == 'success') {
+                    if(data == 'success'){
                         showComments(note_id);
                         $('#addComments').val('');
-
-                    } else {
+                        
+                    }else{
                         $('#alertComments').html('Comments Not added , Try again !');
                     }
                 },

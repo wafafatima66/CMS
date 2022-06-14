@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
    
     @include('layouts.header')
+
 </head>
 
 	<body class="app sidebar-mini">
@@ -45,22 +45,22 @@
 
                         @include('layouts.flash')
 
-						{{-- @yield('page-header') --}}
-
 						@yield('content')						
 
-                    </div>                   
+                    </div>   
+
                 </div>
-                <!-- END APP CONTENT -->
 
-                {{-- @include('layouts.footer')                 --}}
+            </div>	
 
-            </div>		
-        </div><!-- END PAGE -->
+        </div>
+		
+		<!-- END PAGE -->
         
 		@include('layouts.footer-scripts')        
 
 	</body>
+	
 </html>
 
 
