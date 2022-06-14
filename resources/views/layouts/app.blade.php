@@ -41,8 +41,6 @@
 							</a>
 						</div>
 
-						@include('layouts.nav-top')
-
                         @include('layouts.flash')
 
 						@yield('content')						
@@ -60,7 +58,7 @@
 		@include('layouts.footer-scripts')        
 
 	</body>
-	
+
 </html>
 
 
