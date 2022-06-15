@@ -19,7 +19,7 @@
 
     <ul class="side-menu app-sidebar3">
 
-        <div class="dropdown show fs-12 ml-3 mr-3">
+        {{-- <div class="dropdown show fs-12 ml-3 mr-3">
 
             <a class="btn btn-white dropdown-toggle pb-3 pt-3 w-100 " href="#" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -45,15 +45,35 @@
 
             </div>
 
-        </div>
+        </div> --}}
 
         @if (request()->is('user'))
 
             <a class="btn btn-white pb-3 pt-3 w-100 mt-5 fs-12 " href="{{ route('home') }}">{{ __('Notes') }}
             </a>
-
         @else
-            <!-- SEARCH BAR -->
+        
+        <div class="card-sub-body text-center d-flex w-100 fs-12 pl-4 pr-4">
+
+            <input type="search" name='keyword' placeholder="Search Folders" id="searchFolders"
+                style="background: #F6F6F6;" class="btn w-100 text-left pb-2 pt-2 mr-2">
+
+            <button class="btn btn-black" id="addFolderButton" data-toggle="modal" data-target="#addFolderModal"
+                type="button" data-attr="{{ route('folder.add') }}"><i
+                    class="fa fa-plus font-weight-bold"></i></button>
+
+            {{-- <button class="btn btn-white w-100 p-3 text-left" data-toggle="modal" id="addFolderButton"
+            data-target="#addFolderModal" type="button" data-attr="{{ route('folder.add') }}"><i
+                class="fa fa-plus mr-5"></i> Add new folder</button> --}}
+
+        </div>
+
+        <div id="searchfolderslist" style="display:none">
+
+        </div>
+
+        
+            {{-- <!-- SEARCH BAR -->
             <div id="search-bar">
                 <div>
                     <a class="nav-link icon">
@@ -64,13 +84,11 @@
                     </a>
                 </div>
             </div>
-            <!-- END SEARCH BAR -->
+            <!-- END SEARCH BAR --> --}}
             <hr class="slide-divider">
 
             @foreach ($folders as $folder)
-
                 @if ($folder->layer == 1)
-
                     <li class="slide">
 
                         <a class="side-menu__item" data-toggle="slide" href="{{ url('#') }}">
@@ -107,9 +125,7 @@
                         <ul class="slide-menu">
 
                             @foreach ($folders as $subfolder)
-
                                 @if ($subfolder->layer == 2 && $subfolder->main_folder_id == $folder->id)
-
                                     <li>
 
                                         <a class="slide-item">{{ $subfolder->name }}
@@ -144,18 +160,15 @@
 
                                     </li>
                                 @endif
-
                             @endforeach
 
                         </ul>
 
                     </li>
-
                 @endif
-
             @endforeach
 
-            <div class="sidebar-footer">
+            {{-- <div class="sidebar-footer">
 
                 @if (auth()->user()->role != 3)
 
@@ -177,12 +190,12 @@
 
                 @endif
 
-            </div>
+            </div> --}}
 
         @endif
 
     </ul>
-    
+
 </aside>
 
 <!--ADD MAIN FOLDER MODAL -->
@@ -491,9 +504,43 @@
     });
 
     // SEARCH NOTES 
-    $(document).on('keypress', '#searchNotes', function(event) {
-        console.log('ji')
-        var search = $('#searchNotes').val();
-        show_notes_sidebar(0, search);
+    $(document).on('keyup', '#searchNotes', function(event) {
+        if (event.keyCode == 13) {
+            console.log('ji')
+            var search = $('#searchNotes').val();
+            show_notes_sidebar(0, search);
+        }
+    });
+
+    // SEARCH FOLDERS 
+    $(document).on('keyup', '#searchFolders', function(event) {
+
+        event.preventDefault();
+
+        var search = $('#searchFolders').val();
+
+        if (search == "") {
+
+            $("#searchfolderslist").hide();
+
+        } else {
+
+            $.ajax({
+                type: 'GET',
+                url: '{{ url('folders_search') }}',
+                data: {
+                    search: search
+                },
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}',
+                },
+                success: function(data) {
+                    $("#searchfolderslist").show();
+                    $("#searchfolderslist").html(data);
+                }
+            });
+
+        }
+
     });
 </script>

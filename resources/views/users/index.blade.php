@@ -19,7 +19,7 @@
                         </div>
 
                         <div class="page-rightheader">
-                            <button class="btn btn-primary mt-1"
+                            <button class="btn btn-black mt-1"
                             data-toggle="modal" id="addUserButton" data-target="#addModalUser" type="button"
                                                     data-attr="{{ route('user.create')}}"
                             >{{ __('Create New User') }} </button>

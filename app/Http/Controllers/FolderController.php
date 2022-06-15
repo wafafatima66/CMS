@@ -156,4 +156,24 @@ class FolderController extends Controller
     {
         return view('folder.add');
     }
+
+    public function searchFolders(Request $request)
+
+    {
+       
+        if ($request->ajax()) {
+
+            $output = '';
+
+            $search = $request->search;
+
+            $folders = Folder::where('name', 'like', '%' . $search . '%')->withCount('notes')->orderBy('id')->get();
+
+            $html = view('folder.search', compact('folders'))->render();
+
+            return $html;
+
+        }
+    }
+
 }

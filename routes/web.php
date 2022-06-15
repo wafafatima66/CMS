@@ -35,6 +35,9 @@ Route::delete('/sub_folder/{folder}', [SubFolderController::class, 'destroy'])->
 Route::get('/sub_folders/{folder}', [SubFolderController::class, 'delete'])->name('subfolder.delete');
 Route::get('/sub_folders/{folder}/add', [SubFolderController::class, 'add'])->name('subfolder.add');
 
+//SEARCH THROUGH FOLDERS
+Route::get('/folders_search',[FolderController::class, 'searchFolders'])->name('folder.search')->middleware('auth');
+
 // NOTES
 Route::get('/notes',[NotesController::class, 'index'])->name('notes');
 Route::post('/notes',[NotesController::class, 'store'])->name('notes.store');

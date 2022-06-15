@@ -29468,3 +29468,15 @@ section .alert {
       display: block;
     }
   }
+  .badge-black{
+    background-color: #000;
+    color: #fff;
+  }
+  .searchfolderlist{
+    width: 70%;
+    position: absolute;
+    z-index: 1000;
+  }
+  .list-group-item{
+    cursor: pointer;
+  }

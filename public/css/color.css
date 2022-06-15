@@ -211,8 +211,10 @@ a:hover {
   padding-right: 15px;
   text-transform: uppercase;
   color: #fff !important;
-  background-color: #1e1e2d;
-  border-color: #1e1e2d;
+  /* background-color: #1e1e2d;
+  border-color: #1e1e2d; */
+  background-color: #000;
+  border-color: #000;
   box-shadow: 0 1px 3px 0 rgba(50, 50, 50, 0.2), 0 2px 1px -1px rgba(50, 50, 50, 0.12), 0 1px 1px 0 rgba(50, 50, 50, 0.14);
 }
 .btn-cancel:hover {
@@ -238,12 +240,12 @@ a:hover {
 }
 .btn-confirm:hover {
   color: #fff !important;
-  background-color: #1e1e2d;
-  border-color: #1e1e2d;
+  background-color: #000;
+  border-color: #000;
 }
 .btn-confirm:focus, .btn-confirm.focus {
-  background-color: #1e1e2d;
-  border-color: #1e1e2d;
+  background-color: #000;
+  border-color: #000;
 }
 
 .color-red {

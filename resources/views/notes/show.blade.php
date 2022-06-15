@@ -5,7 +5,7 @@
         
         @csrf
 
-        <div class="border-bottom">
+        <div class="border-bottom d-flex justify-content-between">
 
             {{-- <h1 class="card-h6 text-left mt-2 fs-15">Notes > {{ Illuminate\Support\Str::ucfirst($note->title ) }} </h1> --}}
 
@@ -22,6 +22,53 @@
                     {{ Illuminate\Support\Str::ucfirst($note->folder->name) }} </h1>
             @endif
 
+            <div class="mt-2 d-flex">
+
+                <div class="card-sub-body text-center">
+
+                    <button class="btn btn-white " data-toggle="" id="" data-target=""
+                        type="button" data-attr=""><i class="fa fa-cog mr-2"></i></button>
+
+                </div>
+
+                <div class="card-sub-body text-center">
+
+                    <button class="btn btn-white " data-toggle="" id="" data-target=""
+                        type="button" data-attr=""><i class="fa fa-bell mr-2"></i></button>
+
+                </div>
+
+                <div class="dropdown show fs-12">
+
+                    <a class="btn btn-white dropdown-toggle  w-100 " href="#" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+
+                        <i class="fa fa-user mr-2"></i> {{ Auth::user()->name }}
+
+                    </a>
+        
+                    <div class="dropdown-menu w-100">
+        
+                        <a class="dropdown-item d-flex" href="{{ route('logout') }}" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                            <div class="fs-12">{{ __('Logout') }}</div>
+                        </a>
+        
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+        
+                        @if (Auth::user()->role == 1)
+                            <a class="dropdown-item d-flex" href="{{ route('user.index') }}">
+                                <div class="fs-12">{{ __('Users') }}</div>
+                            </a>
+                        @endif
+        
+                    </div>
+        
+                </div>
+
+            </div>
 
 
         </div>
@@ -55,8 +102,8 @@
         <div id="commentbox">
 
             <div class="d-flex justify-content-between p-2">
-                <h1 class="card-h6 text-center mt-3 fs-25 pl-1 mt-1">Comments</h1>
-                <span id="close-slider" class="float-right btn "><i class="fas fa-times-circle mt-3 fs-25"></i></span>
+                <h1 class="card-h6 text-center fs-25 pl-1 font-weight-bolder mb-0">Comments</h1>
+                <span id="close-slider" class="float-right btn "><i class="fas fa-times-circle fs-25"></i></span>
             </div>
 
 
@@ -64,7 +111,7 @@
 
 
                 <input type="text" class="form-control fs-12" placeholder="Write Down Your Comments" id="addComments"
-                    data-attr=" {{ $note['id'] }}">
+                    data-attr=" {{ $note['id'] }}" style="border: none">
                 <p id="alertComments" class="text-danger"></p>
 
                 <div id="comments-inner">

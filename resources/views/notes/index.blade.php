@@ -2,10 +2,26 @@
 
 @if (auth()->user()->role != 3)
 
-    <div class="card-sub-body text-center">
+    <div class="card-sub-body text-center d-flex w-100" style="margin-top: 35px">
 
-        <button style="background: #F6F6F6;" class="btn w-100 text-left pb-3 pt-3" id="createNoteButton"
-            data-attr={{ $folder_id }}><i class="fa fa-plus mr-4 font-weight-bold"></i>Add new note</button>
+        {{-- <div id="search-bar">
+            <div style="background: #F6F6F6;" class="btn w-100 text-left pb-3 pt-3">
+                <a class="nav-link icon">
+                    <form id="search-field">
+                        <input type="search" name='keyword' placeholder="Search Notes" id="searchNotes">
+                    </form>
+                </a>
+            </div>
+        </div> --}}
+        
+        
+        <input type="search" name='keyword' placeholder="Search Notes" id="searchNotes" style="background: #F6F6F6;" class="btn w-100 text-left pb-2 pt-2 mr-2">
+
+        <button  class="btn btn-black" id="createNoteButton"
+        data-attr={{ $folder_id }}><i class="fa fa-plus font-weight-bold"></i></button>
+
+        {{-- <button style="background: #F6F6F6;" class="btn w-100 text-left pb-3 pt-3" id="createNoteButton"
+            data-attr={{ $folder_id }}><i class="fa fa-plus mr-4 font-weight-bold"></i>Add new note</button> --}}
 
     </div>
 
