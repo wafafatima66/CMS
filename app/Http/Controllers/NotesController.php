@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Folder;
 use App\Models\Note;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class NotesController extends Controller
@@ -13,11 +14,21 @@ class NotesController extends Controller
 
         if ($request->ajax()) {
 
-            $output = '';
+            $search_word = '';
 
             $folder_id = $request->folder_id;
 
             $search = $request->search;
+
+            $folder = Folder::where('id' , $folder_id)->first();
+
+            $main_folder_id = Folder::where('id' , $folder_id)->value('main_folder_id');
+
+            $main_folder_name = Folder::where('id' , $main_folder_id)->value('name');
+
+            $user_id = auth()->user()->id ; 
+
+            $user = User::find($user_id);
 
             //showing when no folder selected but searched 
             if ($folder_id == 0 && $search != '0') {
@@ -25,6 +36,8 @@ class NotesController extends Controller
                 $folder_name = 'Search Results';
 ;
                 $notes = Note::where('note', 'like', '%' . $search . '%')->orwhere('title', 'like', '%' . $search . '%')->orderBy('id')->get();
+
+                $search_word = $search ; 
             }
 
             //showing when folder selected and no searches 
@@ -32,7 +45,7 @@ class NotesController extends Controller
 
                 $folder_name = Folder::where('id', $folder_id)->value('name');
 
-                $notes = Note::with(['user'])->where('folder_id', $folder_id)->latest('created_at')->get();
+                $notes = Note::with('user')->where('folder_id', $folder_id)->latest('created_at')->get();
             }
 
             //showing when no folder and no searches
@@ -40,10 +53,12 @@ class NotesController extends Controller
 
                 $folder_name = 'Notes';
 
-                $notes = Note::with(['user'])->latest('created_at')->get();
+                $notes = Note::with('user')->latest('created_at')->get();
+
+                // dd($notes);
             }
 
-            $html = view('notes.index', compact('folder_id', 'notes', 'folder_name'))->render();
+            $html = view('notes.index', compact('folder_id', 'notes', 'folder_name' , 'folder' , 'search_word' , 'main_folder_name','user'))->render();
 
             return $html;
         }
@@ -66,17 +81,32 @@ class NotesController extends Controller
         );
 
 
-        $note = Note::create([
+        // $note = Note::create([
 
-            'user_id' => auth()->user()->id,
+        //     'user_id' => auth()->user()->id,
 
-            'title' => $request->note_title,
+        //     'title' => $request->note_title,
 
-            'note' => $request->content,
+        //     'note' => $request->content,
 
-            'folder_id' => $request->folder_id
+        //     'folder_id' => $request->folder_id
 
-        ]);
+        // ]);
+
+        $folder_id = $request->folder_id ; 
+
+        
+        $note = new Note();
+
+        $note->user_id = auth()->user()->id ;
+        $note->title = $request->note_title ;
+        $note->note = $request->content ;
+        $note->folder_id = $request->folder_id ;
+
+
+        $folder = Folder::find($folder_id);
+
+        $folder->notes()->save($note);
 
         return redirect()->route('home')->with('success', 'Note successfully created');
     }
@@ -89,17 +119,22 @@ class NotesController extends Controller
 
             $output = '';
 
+            // $user = User::find(1);
+            $user_id = auth()->user()->id ; 
+            $user = User::find($user_id);
+
             $note_id = $request->note_id;
 
             if ($note_id == 0) {
 
                 $note = Note::latest('created_at')->first();
+
             } else {
 
                 $note = Note::where('id', $note_id)->first();
             }
 
-            $html = view('notes.show', compact('note'))->render();
+            $html = view('notes.show', compact('note','user'))->render();
 
             return $html;
         }

@@ -17,9 +17,11 @@ class CreateNotesTable extends Migration
             $table->id();
             $table->longText('note');
             $table->string('title');
-            $table->integer('folder_id');
-            $table->integer('user_id');
+            $table->integer('folder_id')->nullable();
+            $table->integer('user_id')->nullable();
+            // $table->unsignedBigInteger('folder_id');
             $table->timestamps();
+            // $table->foreign('folder_id')->on('folders')->references('id');
         });
     }
 

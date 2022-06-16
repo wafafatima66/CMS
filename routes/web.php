@@ -16,6 +16,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // USERS
 Route::resource('user',  'App\Http\Controllers\UserController');
 Route::get('/user/{user}', [App\Http\Controllers\UserController::class, 'delete'])->name('user.delete'); 
+//user notification
+Route::post('/user/mark-as-read', [App\Http\Controllers\UserController::class, 'markNotification'])->name('user.notifications.mark');
 
 //FOLDER
 Route::get('/folders', [FolderController::class, 'index'])->name('folders')->middleware('auth');

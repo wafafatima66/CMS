@@ -56,11 +56,18 @@
         <div class="card-sub-body text-center d-flex w-100 fs-12 pl-4 pr-4">
 
             <input type="search" name='keyword' placeholder="Search Folders" id="searchFolders"
-                style="background: #F6F6F6;" class="btn w-100 text-left pb-2 pt-2 mr-2">
+                 class="btn text-left pb-2 pt-2 "
+                 style="background: #F6F6F6; margin-right:10px ; width:100%"
+                 >
 
+            <span class="clear" id="folderClear">X</span>
+
+            @if (auth()->user()->role != 3 )
             <button class="btn btn-black" id="addFolderButton" data-toggle="modal" data-target="#addFolderModal"
-                type="button" data-attr="{{ route('folder.add') }}"><i
-                    class="fa fa-plus font-weight-bold"></i></button>
+            type="button" data-attr="{{ route('folder.add') }}"><i
+                class="fa fa-plus font-weight-bold"></i></button>
+            @endif
+            
 
             {{-- <button class="btn btn-white w-100 p-3 text-left" data-toggle="modal" id="addFolderButton"
             data-target="#addFolderModal" type="button" data-attr="{{ route('folder.add') }}"><i
@@ -87,59 +94,73 @@
             <!-- END SEARCH BAR --> --}}
             <hr class="slide-divider">
 
+            <li class="slide">
+                
+                <a class="side-menu__item" data-toggle="slide" href="{{ url('#') }}">
+                           
+                    {{-- <i class="angle fa fa-angle-right mr-4"></i> --}}
+
+                    <span class="side-menu__label btn btn-black mb-1 text-left pl-5" id="showAllNotes">All Notes</span>
+
+                </a>
+
+            </li>
+
             @foreach ($folders as $folder)
                 @if ($folder->layer == 1)
+
                     <li class="slide">
 
                         <a class="side-menu__item" data-toggle="slide" href="{{ url('#') }}">
 
-                            <button class="btn table-actions" type="button" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false" style="background: none;"><i class="fa fa-ellipsis-v"></i>
-                            </button>
-
-                            <div class="dropdown-menu table-actions-dropdown" role="menu" aria-labelledby="actions">
-
-                                @if (auth()->user()->role != 3)
-                                    <button class="dropdown-item" data-toggle="modal" id="addSubFolderButton"
-                                        data-target="#addSubFolderModal" type="button"
-                                        data-attr="{{ route('subfolder.add', $folder->id) }}">Add Sub Folder</button>
-
-                                    <button class="dropdown-item" data-toggle="modal" id="editFolderButton"
-                                        data-target="#editModal" type="button"
-                                        data-attr="{{ route('folder.edit', $folder['id']) }}"> Edit</button>
-
-                                    <button class="dropdown-item" data-toggle="modal" id="deleteFolderButton"
-                                        data-target="#deleteModal" type="button"
-                                        data-attr="{{ route('folder.delete', $folder['id']) }}"> Delete</button>
-                                @endif
-
-
-                            </div>
+                           
+                            <i class="angle fa fa-angle-right mr-4"></i>
 
                             <span class="side-menu__label">{{ $folder->name }}</span>
 
-                            <i class="angle fa fa-angle-right"></i>
+                            <button class="btn table-actions" type="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false" style="background: none;"><i class="fa fa-ellipsis-v"></i>
+                        </button>
+
+                        <div class="dropdown-menu table-actions-dropdown dropdown-menu-right" role="menu" aria-labelledby="actions">
+
+                            @if (auth()->user()->role != 3)
+                                <button class="dropdown-item" data-toggle="modal" id="addSubFolderButton"
+                                    data-target="#addSubFolderModal" type="button"
+                                    data-attr="{{ route('subfolder.add', $folder->id) }}">Add Sub Folder</button>
+
+                                <button class="dropdown-item" data-toggle="modal" id="editFolderButton"
+                                    data-target="#editModal" type="button"
+                                    data-attr="{{ route('folder.edit', $folder['id']) }}"> Edit</button>
+
+                                <button class="dropdown-item" data-toggle="modal" id="deleteFolderButton"
+                                    data-target="#deleteModal" type="button"
+                                    data-attr="{{ route('folder.delete', $folder['id']) }}"> Delete</button>
+                            @endif
+
+
+                        </div>
 
                         </a>
 
-                        <ul class="slide-menu">
+                        <ul class="slide-menu ">
 
                             @foreach ($folders as $subfolder)
                                 @if ($subfolder->layer == 2 && $subfolder->main_folder_id == $folder->id)
                                     <li>
-
-                                        <a class="slide-item">{{ $subfolder->name }}
+ 
+                                        <a class="slide-item " id="notes" data-attr="{{ $subfolder->id }}"><span class="mr-2">●</span> <span class="side-item__label">{{ $subfolder->name }}</span>
 
                                             <button class="btn table-actions" type="button" data-toggle="dropdown"
                                                 aria-haspopup="true" aria-expanded="false" style="background: none;"><i
-                                                    class="fa fa-ellipsis-v"></i>
+                                                    class="fa fa-ellipsis-v "></i>
                                             </button>
 
-                                            <div class="dropdown-menu table-actions-dropdown" role="menu"
+                                            <div class="dropdown-menu table-actions-dropdown dropdown-menu-right" role="menu"
                                                 aria-labelledby="actions">
 
-                                                <button class="dropdown-item" id="notes"
-                                                    data-attr="{{ $subfolder->id }}">Notes</button>
+                                                {{-- <button class="dropdown-item" id="notes"
+                                                    data-attr="{{ $subfolder->id }}">Notes</button> --}}
 
                                                 @if (auth()->user()->role != 3)
                                                     <button class="dropdown-item" data-toggle="modal"
@@ -204,7 +225,7 @@
     <div class="modal-dialog modal-dialog-centered modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel"> {{ __('Add folder') }}</h4>
+                <h4 class="modal-title" id="myModalLabel"> {{ __('Add Main folder') }}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -498,26 +519,54 @@
     show_notes_sidebar(0, '0');
 
     $(document).on('click', '#notes', function(event) {
-        // console.log('ji')
+        
+        $(".slide-item").addClass('slide-menu-active');
+        
+        $(".slide-item").not(this).removeClass('slide-menu-active');
+
         let folder_id = $(this).attr('data-attr');
         show_notes_sidebar(folder_id, '0');
+
     });
 
     // SEARCH NOTES 
     $(document).on('keyup', '#searchNotes', function(event) {
+
+        $("#searchNotes").css("width", "80%");
+
+        $("#searchNotes").css("margin-right", "0");
+
+        $('#noteClear').show();
+
         if (event.keyCode == 13) {
-            console.log('ji')
             var search = $('#searchNotes').val();
             show_notes_sidebar(0, search);
         }
+
     });
 
+    // CLEAR NOTES
+    $(document).on('click', '#noteClear', function(event) {
+            show_notes_sidebar(0, '0');
+    });
+
+    //SHOW ALL NOTES 
+    $(document).on('click', '#showAllNotes', function(event) {
+            show_notes_sidebar(0, '0');
+    });
+    
     // SEARCH FOLDERS 
     $(document).on('keyup', '#searchFolders', function(event) {
 
         event.preventDefault();
 
         var search = $('#searchFolders').val();
+
+        $('#folderClear').show();
+
+        $("#searchFolders").css("width", "80%");
+
+        $("#searchFolders").css("margin-right", "0");
 
         if (search == "") {
 
@@ -542,5 +591,12 @@
 
         }
 
+    });
+
+    //CLEAR FOLDER SEARCH
+    $(document).on('click', '#folderClear', function(event) {
+        $("#searchfolderslist").hide();
+        $('#searchFolders').val('');
+        $('#folderClear').hide();
     });
 </script>

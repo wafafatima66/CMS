@@ -36,7 +36,7 @@ class CreateFoldersSeeder extends Seeder
             [
                 'user_id'=>'1',
                 'name' => 'Sub Category 1',
-                'layer'=>'1',
+                'layer'=>'2',
                 'main_folder_id'=>'1'
             ],
            

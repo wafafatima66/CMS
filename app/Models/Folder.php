@@ -13,7 +13,7 @@ class Folder extends Model
         'name',
         'layer',
         'user_id',
-        'main_folder_id'
+        'main_folder_id',
     ];
 
     public function user()

@@ -1,150 +1,110 @@
 <div id="note-div">
 
-    <form action="{{ route('notes.update', $note->id) }}" method="post" enctype="multipart/form-data">
+
+
+    <div class="border-bottom d-flex justify-content-between">
+
+        {{-- <h1 class="card-h6 text-left mt-2 fs-15">Notes > {{ Illuminate\Support\Str::ucfirst($note->title ) }} </h1> --}}
+
+        @if ($note->folder->main_folder_id != 0)
+            @php
+                $main_folder_id = $note->folder->main_folder_id;
+                $main_folder_name = App\Models\Folder::where('id', $main_folder_id)->value('name');
+            @endphp
+
+            <h1 class="card-h6 text-left mt-2 fs-15">{{ $main_folder_name }} >
+                {{ Illuminate\Support\Str::ucfirst($note->folder->name) }} </h1>
+        @else
+            <h1 class="card-h6 text-left mt-2 fs-15">
+                {{ Illuminate\Support\Str::ucfirst($note->folder->name) }} </h1>
+        @endif
+
+        {{-- include here --}}
+        @include('notes.top-rightnav')
+
+
+
+    </div>
+
+    <div class="d-flex justify-content-between">
+
+        <div class="card-h6 fs-25">
+
+            {{ Illuminate\Support\Str::ucfirst($note->title) }}
+
+        </div>
+
+        <div>
+            @if (auth()->user()->role != 3)
+            <a class="black-hover  p-2 m-2" data-toggle="modal" id="deleteNoteButton" data-target="#deleteModal" href=""
+                data-attr=" {{ route('notes.delete', $note['id']) }}">
+                <i class="fa fa-trash mt-5"></i>
+            </a>
+        @endif
+            <button type="button" class=" btn black-hover p-2 m-2 " id="commentbutton" data-attr=" {{ $note['id'] }} ">
+                <i class="fas fa-comment-dots "></i>
+            </button>
+
+        </div>
+
+
+    </div>
+
+    {{-- comments --}}
+
+    <div id="commentbox">
+
+        <div class="d-flex justify-content-between p-2">
+            <h1 class="card-h6 text-center fs-25 pl-1 font-weight-bolder mb-0">Comments</h1>
+            <span id="close-slider" class="float-right btn "><i class="fas fa-times-circle fs-25"></i></span>
+        </div>
+
+
+        <div class="slider-inner p-1">
+
+
+            <input type="text" class="form-control fs-12" placeholder="Write Down Your Comments" id="addComments"
+                data-attr=" {{ $note['id'] }}" style="border: none">
+            <p id="alertComments" class="text-danger"></p>
+
+            <div id="comments-inner">
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-md-2">
+                <p>Created By : </p>
+            </div>
+            <div class="col-md-4">
+                <p class="font-weight-700">{{ Illuminate\Support\Str::ucfirst($note->user->name) }}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                <p>Last Modified : </p>
+            </div>
+            <div class="col-md-4">
+                <p class="font-weight-700">{{ date('F j, Y, g:i a', strtotime($note->created_at)) }}</p>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+    <form action="{{ route('notes.update', $note->id) }}" method="post" enctype="multipart/form-data"
+        id="updateNoteForm">
         @method('PUT')
-        
         @csrf
-
-        <div class="border-bottom d-flex justify-content-between">
-
-            {{-- <h1 class="card-h6 text-left mt-2 fs-15">Notes > {{ Illuminate\Support\Str::ucfirst($note->title ) }} </h1> --}}
-
-            @if ($note->folder->main_folder_id != 0)
-                @php
-                    $main_folder_id = $note->folder->main_folder_id;
-                    $main_folder_name = App\Models\Folder::where('id', $main_folder_id)->value('name');
-                @endphp
-
-                <h1 class="card-h6 text-left mt-2 fs-15">{{ $main_folder_name }} >
-                    {{ Illuminate\Support\Str::ucfirst($note->folder->name) }} </h1>
-            @else
-                <h1 class="card-h6 text-left mt-2 fs-15">
-                    {{ Illuminate\Support\Str::ucfirst($note->folder->name) }} </h1>
-            @endif
-
-            <div class="mt-2 d-flex">
-
-                <div class="card-sub-body text-center">
-
-                    <button class="btn btn-white " data-toggle="" id="" data-target=""
-                        type="button" data-attr=""><i class="fa fa-cog mr-2"></i></button>
-
-                </div>
-
-                <div class="card-sub-body text-center">
-
-                    <button class="btn btn-white " data-toggle="" id="" data-target=""
-                        type="button" data-attr=""><i class="fa fa-bell mr-2"></i></button>
-
-                </div>
-
-                <div class="dropdown show fs-12">
-
-                    <a class="btn btn-white dropdown-toggle  w-100 " href="#" role="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-
-                        <i class="fa fa-user mr-2"></i> {{ Auth::user()->name }}
-
-                    </a>
-        
-                    <div class="dropdown-menu w-100">
-        
-                        <a class="dropdown-item d-flex" href="{{ route('logout') }}" onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
-                            <div class="fs-12">{{ __('Logout') }}</div>
-                        </a>
-        
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-        
-                        @if (Auth::user()->role == 1)
-                            <a class="dropdown-item d-flex" href="{{ route('user.index') }}">
-                                <div class="fs-12">{{ __('Users') }}</div>
-                            </a>
-                        @endif
-        
-                    </div>
-        
-                </div>
-
-            </div>
-
-
-        </div>
-
-        <div class="d-flex justify-content-between">
-
-            <div class="card-h6 fs-25">
-
-                {{ Illuminate\Support\Str::ucfirst($note->title) }}
-
-            </div>
-
-            <div>
-                <a class="black-hover  p-2 m-2" data-toggle="modal" id="deleteNoteButton" data-target="#deleteModal"
-                    href="" data-attr=" {{ route('notes.delete', $note['id']) }}">
-                    <i class="fa fa-trash mt-5"></i>
-                </a>
-
-                <button type="button" class=" btn black-hover p-2 m-2 " id="commentbutton"
-                    data-attr=" {{ $note['id'] }} ">
-                    <i class="fas fa-comment-dots "></i>
-                </button>
-
-            </div>
-
-
-        </div>
-
-        {{-- comments --}}
-
-        <div id="commentbox">
-
-            <div class="d-flex justify-content-between p-2">
-                <h1 class="card-h6 text-center fs-25 pl-1 font-weight-bolder mb-0">Comments</h1>
-                <span id="close-slider" class="float-right btn "><i class="fas fa-times-circle fs-25"></i></span>
-            </div>
-
-
-            <div class="slider-inner p-1">
-
-
-                <input type="text" class="form-control fs-12" placeholder="Write Down Your Comments" id="addComments"
-                    data-attr=" {{ $note['id'] }}" style="border: none">
-                <p id="alertComments" class="text-danger"></p>
-
-                <div id="comments-inner">
-
-                </div>
-
-            </div>
-
-
-        </div>
-
-        <div class="card-body">
-
-            <div class="row">
-                <div class="col-md-2">
-                    <p>Created By : </p>
-                </div>
-                <div class="col-md-4">
-                    <p class="font-weight-700">{{ Illuminate\Support\Str::ucfirst($note->user->name) }}</p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-2">
-                    <p>Last Modified : </p>
-                </div>
-                <div class="col-md-4">
-                    <p class="font-weight-700">{{ date('F j, Y, g:i a', strtotime($note->created_at)) }}</p>
-                </div>
-            </div>
-
-        </div>
-
 
 
         @if (auth()->user()->role == 3)
@@ -154,6 +114,7 @@
                     {!! $note->note !!}
                 </div>
 
+                <input type="hidden" name="content" value="{{ $note->note }}">
 
             </div>
         @else
@@ -165,14 +126,16 @@
 
             <div class="border-0 text-right mb-2 mt-1">
 
-                <button type="submit" class="btn btn-black">{{ __('Update') }}</button>
+                <button type="submit" class="btn btn-black" id="noteUpdate">{{ __('Update') }}</button>
 
             </div>
+        @endif
 
     </form>
 
+
+
 </div>
-@endif
 
 <!-- RichText JS -->
 <script src="{{ URL::asset('plugins/richtext/jquery.richtext.min.js') }}"></script>
@@ -321,8 +284,26 @@
         useTabForNext: false
     });
 
-    // load comments function
+    // MARK AS READ NOTIFICATION
+    function sendMarkRequest(id = null) {
+        return $.ajax("{{ route('user.notifications.mark') }}", {
+            method: 'POST',
+            data: {
+                "_token": "{{ csrf_token() }}",
+                id
+            }
+        });
+    }
 
+    $('.mark-as-read').click(function() {
+        let request = sendMarkRequest($(this).data('id'));
+        request.done(() => {
+            $(this).parents('div.dropdown-item').remove();
+            location.reload();
+        });
+    });
+
+    // load comments function
     function showComments(note_id) {
         $.ajax({
             type: 'GET',
@@ -341,9 +322,9 @@
     // comments
 
     $('#commentbutton').unbind().click(function() {
-
+        event.preventDefault();
         let note_id = $(this).attr('data-attr');
-        console.log(note_id)
+        // console.log(note_id)
         showComments(note_id)
         $('#commentbox').animate({
             right: "400px"
@@ -356,11 +337,78 @@
         }, 2000);
     });
 
+    // NOTIFICATION SHOW NOTE
+    // $(document).on('click', '#notificationShowNote', function(event) {
+        $('#notificationShowNote').unbind().click(function(event) {
+        event.preventDefault();
+        let note_id = $(this).attr('data-attr');
+
+        var result1;
+        var result2;
+
+        showComments(note_id)
+        $('#commentbox').animate({
+            right: "400px"
+        }, 1000);
+
+        $.when(
+         
+            $.ajax({
+                type: 'GET',
+                url: '{{ url('notes/show') }}',
+                data: {
+                    note_id: note_id
+                },
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}',
+                },
+                success: function(data) {
+
+                    result2 = data;
+                }
+            })
+
+            ,
+
+            $.ajax({
+                type: 'GET',
+                url: '{{ url('comments/show') }}',
+                data: {
+                    note_id: note_id
+                },
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}',
+                },
+                success: function(data) {
+
+                    result1 = data;
+                }
+            })
+
+           
+
+        ).then(function() {
+            $("#view-note-div").html(result2);
+            $("#comments-inner").html(result1);
+            
+            $('#commentbox').animate({
+                right: "400px"
+            }, 1000);
+        });
+
+        let request = sendMarkRequest($(this).data('id'));
+        request.done(() => {
+            $(this).parents('div.dropdown-item').remove();
+            // location.reload();
+        });
+
+    });
+
     // adding comments 
 
     // $(document).on('keyup', '#addComments', function(event) {
-    $('#addComments').unbind().keyup(function() {
-        event.preventDefault();
+    $('#addComments').unbind().keyup(function(event) {
+        // event.preventDefault();
 
         if (event.keyCode === 13) {
             var comment = $('#addComments').val();
@@ -368,7 +416,8 @@
             console.log(note_id)
             $.ajax({
                 type: 'POST',
-                url: 'comments',
+                // url: 'comments',
+                url: '{{ url('comments') }}',
                 data: {
                     comment: comment,
                     note_id: note_id

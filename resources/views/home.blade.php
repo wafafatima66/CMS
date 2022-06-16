@@ -46,13 +46,21 @@
                                         enctype="multipart/form-data">
                                         @csrf
                                         
-                                            <div class="border-bottom">
+                                            <div class="border-bottom d-flex justify-content-between">
                                         
+                                                <h1 class="card-h6 text-left mt-2 fs-15"> <span id="note-folder-name"> Notes</span>  > <span id="note-subfolder-name">Note Title</span>  </h1>
+
+                                             {{-- include here --}}
+                                                {{-- @include('notes.top-rightnav') --}}
+
+                                               
                                         
-                                                <h1 class="card-h6 text-left mt-2 fs-15">Notes > <span id="note-breadcrumn-title">Note Title</span>  </h1>
+                                                {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                    @csrf
+                                                </form> --}}
 
                                                 
-                                        
+
                                             </div>
                                         
                                             <div class="card-h6 fs-25 d-flex">
@@ -176,16 +184,41 @@
                         <div class="modal-body">        
                             <p>{{ __('Select a folder or a sub folder !') }}</p>   
                             
-                            <select id="folder_id_from_modal" class="form-control mt-2 fs-10" >
+                            {{-- <select id="folder_id_from_modal" class="form-control mt-2 fs-10" >
                                 <option value="">Select Folder</option>
 
                             @foreach ($folders as $folder)
+
                                 @if ($folder->main_folder_id != 0)
                                     <option value="{{ $folder->id }}">{{ $folder->name }}</option> 
                                 @endif
                                 
                             @endforeach
-                        </select> 
+
+                            </select>  --}}
+
+                            <select class="custom-select form-control mt-2 fs-10" id="folder_id_from_modal">
+                        
+                                <option value="">Select Folder</option>
+
+                                @foreach ($folders as $folder)
+                                @if ($folder->layer == 1)
+
+                                <optgroup label="{{ $folder->name }}">
+
+
+                                    @foreach ($folders as $subfolder)
+                                @if ($subfolder->layer == 2 && $subfolder->main_folder_id == $folder->id)
+
+                                <option value="{{ $subfolder->id }}-{{ $subfolder->name }}-{{ $folder->name }}">{{ $subfolder->name }}</option>
+
+                                @endif
+                                @endforeach
+
+                                </optgroup>
+                                @endif
+                                @endforeach
+                              </select>
 
                         </div>
 
@@ -531,25 +564,49 @@
             // open writing note div 
             $(document).on('click', '#createNoteButton', function(event) {
                 event.preventDefault();
-                let folder_id = $(this).attr('data-attr');
+                // let folder_id = $(this).attr('data-attr');
+                // console.log($(this).attr('data-attr'))
 
+                var values1 = $(this).attr('data-attr');
+                var para_array1 = values1.split("-");
+
+                var folder_id = para_array1[0];
+                        
                 if(folder_id == 0){
                     $('#warningModal').modal("show");
 
                     $('#folder_id_from_modal').change(function() {
-                        console.log($(this).val())
-                        folder_id = $(this).val();
+                        
+                        var values = $(this).val();
+                        var para_array = values.split("-");
+
+                        // console.log(para_array)
+
+                        folder_id = para_array[0];
+                        var subfoldername = para_array[1];
+                        var foldername = para_array[2];
+
                         $('#warningModal').modal("hide");
                         $('#getfolderid').val(folder_id);
                         $('#note-div').hide();
                         $('#create-note-div').show();
+                        $('#note-folder-name').html(foldername);
+                        $('#note-subfolder-name').html(subfoldername);
+                        
                     })
                 }
                 else {
+                    
+                    folder_id = para_array1[0];
+                        var subfoldername = para_array1[1];
+                        var foldername = para_array1[2];
 
                     $('#getfolderid').val(folder_id);
                     $('#note-div').hide();
                     $('#create-note-div').show();
+
+                    $('#note-folder-name').html(foldername);
+                    $('#note-subfolder-name').html(subfoldername);
                 }
                
             });
@@ -577,7 +634,7 @@
                         $('#new-note-title').val(title);
                         $('#title').remove();
                         $('#note-title').html(title);
-                        $('#note-breadcrumn-title').html(title);
+                        // $('#note-breadcrumn-title').html(title);
                     }, 2000);
                 });
             });
@@ -605,13 +662,13 @@
             shownote(0);
 
             // selecting note to show
-
             $(document).on('click', '#sidebar-note-card', function(event) {
                 event.preventDefault();
                 let note_id = $(this).attr('data-attr');
                 shownote(note_id);
             });
 
+             
 
 
         });

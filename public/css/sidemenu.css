@@ -482,7 +482,7 @@
   /* color: #000 !important; */
   /* font-weight: 600; */
   /* border: solid 1px #f1f1f1; */
-    background: #f6f6f6;
+    /* background: #f6f6f6; */
 }
 
 .side-menu .side-menu__icon {
@@ -546,7 +546,7 @@
 .slide-item {
   display: flex;
   align-items: center;
-  padding: 2px 14px 2px 55px;
+  padding: 2px 14px 2px 35px;
   font-size: 11px;
   color: #1e1e2d;
 }
