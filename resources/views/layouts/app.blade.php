@@ -18,7 +18,7 @@
 
 		<!-- LOADER -->
 		<div id="global-loader" >
-			<img src="{{URL::asset('img/svgs/loader-2.gif')}}" alt="loader">           
+			<img src="{{URL::asset('img/svgs/loader-6.gif')}}" alt="loader">           
 		</div>
 		<!-- END LOADER -->
 

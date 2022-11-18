@@ -25,7 +25,7 @@
                         </div>
                     @endif
                     
-                    <div class="input-box mb-4">                             
+                    <div class="">                             
                         <label for="email" class="fs-12 font-weight-bold text-md-right">{{ __('Email Address') }}</label>
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="off" placeholder="Email Address" required>
                         @error('email')
@@ -35,7 +35,7 @@
                         @enderror                            
                     </div>
 
-                    <div class="input-box">                            
+                    <div class="">                            
                         <label for="password" class="fs-12 font-weight-bold text-md-right">{{ __('Password') }}</label>
                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="off" placeholder="Password" required>
                         @error('password')

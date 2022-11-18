@@ -26731,6 +26731,8 @@ hr.pageheader-border {
  * ========================================================================== */
 .input-box {
     margin-bottom: 1.5rem;
+    /* overflow-y: auto; */
+    height: 400px;
 }
 
 .input-box h6 {
@@ -29539,3 +29541,13 @@ section .alert {
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
 }
+/* .drag-item{
+    cursor: move;
+}
+.drag-item.dragElem {
+opacity: 0.4;
+}
+.drag-item.over {
+border-top: 2px solid blue;
+}
+   */
