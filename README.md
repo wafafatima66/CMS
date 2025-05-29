@@ -30,7 +30,7 @@
   <h2>🚀 Installation</h2>
   <ol>
     <li>Clone the repository:
-      <pre><code>git clone https://github.com/wafafatima66/CMS</code></pre>
+      <pre><code> https://github.com/wafafatima66/notes-management-system-laravel </code></pre>
     </li>
     <li>Navigate to the project directory:
       <pre><code>cd laravel-cms</code></pre>
